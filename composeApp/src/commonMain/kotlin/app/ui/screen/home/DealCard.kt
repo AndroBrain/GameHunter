@@ -1,9 +1,11 @@
 package app.ui.screen.home
 
+import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
@@ -11,12 +13,16 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import app.ui.composable.image.AsyncImage
+import app.ui.composable.modifier.scaleClickable
+import app.ui.composable.modifier.scaleOnClick
 import app.ui.theme.Resources
 import domain.deal.DealModel
 
@@ -24,33 +30,48 @@ import domain.deal.DealModel
 fun DealCard(
     modifier: Modifier = Modifier,
     deal: DealModel,
+    onClick: () -> Unit,
 ) {
-    Card(modifier = modifier) {
-        Row(modifier = Modifier.fillMaxWidth()) {
+    val interactionSource = remember { MutableInteractionSource() }
+    Card(modifier = modifier.scaleOnClick(interactionSource)) {
+        Row(
+            modifier = Modifier.fillMaxSize()
+                .scaleClickable(
+                    interactionSource = interactionSource,
+                    indication = LocalIndication.current,
+                    onClick = onClick,
+                )
+        ) {
             AsyncImage(
                 modifier = Modifier.size(Resources.dimens.dealImageSize).clip(CardDefaults.shape),
                 url = deal.thumb,
             )
-            Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingExtraSmall))
+            Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
             Column {
-                Text(text = deal.title, minLines = 2, maxLines = 2)
+                val currencySign = Resources.strings.currencySign
+                Text(
+                    text = deal.title,
+                    minLines = 2,
+                    maxLines = 2,
+                    fontWeight = FontWeight.Bold,
+                )
                 if (deal.isOnSale) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = deal.salePrice,
+                            text = "${deal.salePrice}$currencySign",
                             color = MaterialTheme.colorScheme.primary,
                             style = MaterialTheme.typography.titleLarge,
                         )
                         Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingExtraSmall))
                         Text(
-                            text = deal.normalPrice,
+                            text = "${deal.normalPrice}$currencySign",
                             style = MaterialTheme.typography.titleSmall.copy(textDecoration = TextDecoration.LineThrough),
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
                 } else {
                     Text(
-                        text = deal.salePrice,
+                        text = "${deal.salePrice}$currencySign",
                         style = MaterialTheme.typography.titleSmall,
                     )
                 }

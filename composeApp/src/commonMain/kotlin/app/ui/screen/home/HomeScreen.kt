@@ -16,6 +16,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import app.ui.theme.Resources
+import app.util.dealLink
 
 @Composable
 fun HomeScreen(
@@ -49,7 +50,11 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.spacedBy(Resources.dimens.viewsSpacingSmall)
         ) {
             items(state.deals) { deal ->
-                DealCard(modifier = dealModifier, deal = deal)
+                DealCard(
+                    modifier = dealModifier,
+                    deal = deal,
+                    onClick = { component.openInBrowser(dealLink(deal.dealID)) },
+                )
             }
         }
     }

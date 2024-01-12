@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import app.App
+import app.di.AndroidFrameworkModule
 import app.di.DefaultSharedModule
 import app.ui.screen.root.DefaultRootComponent
 import app.ui.screen.root.RootComponent
@@ -15,8 +16,9 @@ class MainActivity : ComponentActivity() {
 
         val root: RootComponent = retainedComponent { componentContext ->
             DefaultRootComponent(
-                componentContext,
+                context = componentContext,
                 sharedModule = DefaultSharedModule(),
+                frameworkModule = AndroidFrameworkModule(context = applicationContext),
             )
         }
 

@@ -1,5 +1,6 @@
 package app.ui.screen.root
 
+import app.di.FrameworkModule
 import app.di.SharedModule
 import app.ui.screen.home.DefaultHomeComponent
 import com.arkivanov.decompose.ComponentContext
@@ -15,6 +16,7 @@ interface RootComponent {
 class DefaultRootComponent(
     context: ComponentContext,
     private val sharedModule: SharedModule,
+    private val frameworkModule: FrameworkModule,
 ) : RootComponent, ComponentContext by context {
     private val navigation = StackNavigation<ScreenConfig>()
 
@@ -34,6 +36,7 @@ class DefaultRootComponent(
             DefaultHomeComponent(
                 context = context,
                 getDealsUseCase = sharedModule.provideGetGamesUseCase(),
+                browserOpener = frameworkModule.provideBrowserOpener(),
             )
         )
     }

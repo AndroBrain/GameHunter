@@ -1,8 +1,10 @@
+
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import app.App
 import app.di.DefaultSharedModule
+import app.di.DesktopFrameworkModule
 import app.ui.screen.root.DefaultRootComponent
 import app.ui.screen.root.RootComponent
 import com.arkivanov.decompose.DefaultComponentContext
@@ -16,6 +18,7 @@ fun main() {
         DefaultRootComponent(
             context = DefaultComponentContext(lifecycle = lifecycle),
             sharedModule = DefaultSharedModule(),
+            frameworkModule = DesktopFrameworkModule(),
         )
     }
     application {
@@ -24,7 +27,7 @@ fun main() {
         LifecycleController(lifecycle, windowState)
 
         Window(onCloseRequest = ::exitApplication, title = "GameHunter") {
-            App(root)
+            App(root = root)
         }
     }
 }

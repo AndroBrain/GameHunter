@@ -1,6 +1,7 @@
 package app.ui.screen.home
 
-import app.ui.util.coroutineScope
+import app.util.BrowserOpener
+import app.util.coroutineScope
 import com.arkivanov.decompose.ComponentContext
 import domain.deal.GetDealsUseCase
 import kotlinx.coroutines.SupervisorJob
@@ -14,11 +15,13 @@ interface HomeComponent {
     val state: StateFlow<HomeState>
 
     fun getDeals()
+    fun openInBrowser(url: String)
 }
 
 class DefaultHomeComponent(
     context: ComponentContext,
     private val getDealsUseCase: GetDealsUseCase,
+    private val browserOpener: BrowserOpener,
 ) : HomeComponent, ComponentContext by context {
     private val _state = MutableStateFlow(HomeState())
     override val state = _state.asStateFlow()
@@ -30,5 +33,9 @@ class DefaultHomeComponent(
             val games = getDealsUseCase()
             _state.update { state -> state.copy(deals = games) }
         }
+    }
+
+    override fun openInBrowser(url: String) {
+        browserOpener.openLink(url)
     }
 }
