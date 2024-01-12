@@ -2,6 +2,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import app.App
+import app.di.DefaultSharedModule
 import app.ui.screen.root.DefaultRootComponent
 import app.ui.screen.root.RootComponent
 import com.arkivanov.decompose.DefaultComponentContext
@@ -14,6 +15,7 @@ fun main() {
     val root: RootComponent = runOnUiThread {
         DefaultRootComponent(
             context = DefaultComponentContext(lifecycle = lifecycle),
+            sharedModule = DefaultSharedModule(),
         )
     }
     application {
