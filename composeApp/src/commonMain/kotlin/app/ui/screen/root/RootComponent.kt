@@ -33,7 +33,7 @@ class DefaultRootComponent(
         ScreenConfig.Home -> Child.ScreenHome(
             DefaultHomeComponent(
                 context = context,
-                getGamesUseCase = sharedModule.provideGetGamesUseCase(),
+                getDealsUseCase = sharedModule.provideGetGamesUseCase(),
             )
         )
     }

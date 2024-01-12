@@ -2,7 +2,7 @@ package app.ui.screen.home
 
 import app.ui.util.coroutineScope
 import com.arkivanov.decompose.ComponentContext
-import domain.game.GetGamesUseCase
+import domain.deal.GetDealsUseCase
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,24 +13,22 @@ import kotlinx.coroutines.launch
 interface HomeComponent {
     val state: StateFlow<HomeState>
 
-    fun getGames()
+    fun getDeals()
 }
 
 class DefaultHomeComponent(
     context: ComponentContext,
-    private val getGamesUseCase: GetGamesUseCase,
+    private val getDealsUseCase: GetDealsUseCase,
 ) : HomeComponent, ComponentContext by context {
     private val _state = MutableStateFlow(HomeState())
     override val state = _state.asStateFlow()
 
     private val scope = coroutineScope(SupervisorJob())
 
-    override fun getGames() {
+    override fun getDeals() {
         scope.launch {
-            val games = getGamesUseCase()
-            _state.update { state ->
-                state.copy(games = games.map { GameDisplayable(it.name) })
-            }
+            val games = getDealsUseCase()
+            _state.update { state -> state.copy(games = games) }
         }
     }
 }

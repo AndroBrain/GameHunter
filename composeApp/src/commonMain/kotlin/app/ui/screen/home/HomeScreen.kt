@@ -20,7 +20,7 @@ fun HomeScreen(
     component: HomeComponent,
 ) {
     LaunchedEffect(Unit) {
-        component.getGames()
+        component.getDeals()
     }
     val state by component.state.collectAsState()
     Scaffold(
@@ -35,7 +35,7 @@ fun HomeScreen(
     ) { insets ->
         LazyColumn(modifier = Modifier.padding(insets).fillMaxSize()) {
             items(state.games) { item ->
-                Text(text = item.name)
+                Text(text = item.title)
             }
         }
     }

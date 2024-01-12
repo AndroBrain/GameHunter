@@ -59,6 +59,8 @@ kotlin {
             implementation(libs.decompose)
             implementation(libs.decompose.jetbrains)
             implementation(libs.kotlinx.coroutines)
+            implementation(libs.ktor.core)
+            implementation(libs.ktor.cio)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

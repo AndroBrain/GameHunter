@@ -1,7 +1,7 @@
 package app.di
 
-import domain.game.GetGamesUseCase
+import domain.deal.GetDealsUseCase
 
 interface SharedModule {
-    fun provideGetGamesUseCase(): GetGamesUseCase
+    fun provideGetGamesUseCase(): GetDealsUseCase
 }

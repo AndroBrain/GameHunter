@@ -1,10 +1,7 @@
 package app.ui.screen.home
 
+import domain.deal.DealModel
+
 data class HomeState(
-    val games: List<GameDisplayable> = listOf(
-        GameDisplayable(name = "Test1"),
-        GameDisplayable(name = "Test2"),
-        GameDisplayable(name = "Test3"),
-        GameDisplayable(name = "Test4"),
-    ),
+    val games: List<DealModel> = emptyList(),
 )
