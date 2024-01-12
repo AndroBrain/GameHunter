@@ -4,4 +4,5 @@ import domain.deal.DealModel
 
 data class HomeState(
     val deals: List<DealModel> = emptyList(),
+    val isLoadingInitial: Boolean = true,
 )

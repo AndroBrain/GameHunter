@@ -31,7 +31,7 @@ class DefaultHomeComponent(
     override fun getDeals() {
         scope.launch {
             val games = getDealsUseCase()
-            _state.update { state -> state.copy(deals = games) }
+            _state.update { state -> state.copy(deals = games, isLoadingInitial = false) }
         }
     }
 
