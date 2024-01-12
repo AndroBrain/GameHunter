@@ -15,4 +15,7 @@ data class Dimensions(
     val viewsSpacingMedium: Dp = 16.dp,
     val viewsSpacingLarge: Dp = 24.dp,
     val viewsSpacingExtraLarge: Dp = 32.dp,
+
+    val dealMinSize: Dp = 250.dp,
+    val dealImageSize: Dp = 88.dp,
 )

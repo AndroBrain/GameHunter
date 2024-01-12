@@ -5,7 +5,7 @@ data class DealModel(
     val dealRating: String,
     val gameID: String,
     val internalName: String,
-    val isOnSale: String,
+    val isOnSale: Boolean,
     val lastChange: Int,
     val metacriticLink: String?,
     val metacriticScore: String,

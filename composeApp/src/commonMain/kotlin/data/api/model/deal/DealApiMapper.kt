@@ -9,7 +9,7 @@ fun DealResponse.toModel() = DealModel(
     dealRating = dealRating,
     gameID = gameID,
     internalName = internalName,
-    isOnSale = isOnSale,
+    isOnSale = isOnSale.toInt() == 1,
     lastChange = lastChange,
     metacriticLink = metacriticLink,
     metacriticScore = metacriticScore,

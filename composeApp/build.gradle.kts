@@ -61,6 +61,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines)
             implementation(libs.ktor.core)
             implementation(libs.ktor.cio)
+            implementation(libs.kamel.images)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
