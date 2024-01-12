@@ -36,6 +36,7 @@ class DefaultRootComponent(
             DefaultHomeComponent(
                 context = context,
                 getDealsUseCase = sharedModule.provideGetGamesUseCase(),
+                getShopsUseCase = sharedModule.provideGetShopsUseCase(),
                 browserOpener = frameworkModule.provideBrowserOpener(),
             )
         )

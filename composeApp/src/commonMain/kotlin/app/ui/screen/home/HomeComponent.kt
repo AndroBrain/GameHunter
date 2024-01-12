@@ -5,6 +5,7 @@ import app.util.coroutineScope
 import com.arkivanov.decompose.ComponentContext
 import domain.deal.DealParams
 import domain.deal.GetDealsUseCase
+import domain.shop.GetShopsUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +25,7 @@ interface HomeComponent {
 class DefaultHomeComponent(
     context: ComponentContext,
     private val getDealsUseCase: GetDealsUseCase,
+    private val getShopsUseCase: GetShopsUseCase,
     private val browserOpener: BrowserOpener,
 ) : HomeComponent, ComponentContext by context {
     private val _state = MutableStateFlow(HomeState())
@@ -31,6 +33,14 @@ class DefaultHomeComponent(
 
     private val scope = coroutineScope(SupervisorJob())
     private var loadMoreJob: Job? = null
+
+    init {
+        scope.launch {
+            val shops = getShopsUseCase()
+            println(shops)
+            _state.update { state -> state.copy(shops = shops) }
+        }
+    }
 
     override fun getInitialDeals() {
         scope.launch {
