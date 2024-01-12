@@ -37,7 +37,7 @@ fun DealCard(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     Card(modifier = modifier.scaleOnClick(interactionSource)) {
-        Row(
+        Column(
             modifier = Modifier.fillMaxSize()
                 .scaleClickable(
                     interactionSource = interactionSource,
@@ -45,60 +45,60 @@ fun DealCard(
                     onClick = onClick,
                 ),
         ) {
-            AsyncImage(
-                modifier = Modifier.size(
-                    width = Resources.dimens.dealImageWidth,
-                    height = Resources.dimens.dealImageHeight,
-                ).clip(CardDefaults.shape),
-                url = deal.thumb,
-            )
-            Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
-            Column(modifier = Modifier.heightIn(min = Resources.dimens.dealImageHeight)) {
-                val currencySign = Resources.strings.currencySign
-                Text(
-                    text = deal.title,
-                    minLines = 2,
-                    maxLines = 2,
-                    fontWeight = FontWeight.Bold,
+            Row {
+                AsyncImage(
+                    modifier = Modifier.size(
+                        width = Resources.dimens.dealImageWidth,
+                        height = Resources.dimens.dealImageHeight,
+                    ).clip(CardDefaults.shape),
+                    url = deal.thumb,
                 )
-                Spacer(modifier = Modifier.weight(1F))
-                Row(verticalAlignment = Alignment.Bottom) {
-                    deal.releaseDate?.let { date ->
-                        Text(
-                            text = date,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    }
+                Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
+                Column(modifier = Modifier.heightIn(min = Resources.dimens.dealImageHeight)) {
+                    val currencySign = Resources.strings.currencySign
+                    Text(
+                        text = deal.title,
+                        minLines = 2,
+                        maxLines = 2,
+                        fontWeight = FontWeight.Bold,
+                    )
                     Spacer(modifier = Modifier.weight(1F))
-                    if (deal.isOnSale) {
-                        Text(
-                            text = "${deal.salePrice}$currencySign",
-                            color = MaterialTheme.colorScheme.primary,
-                            style = MaterialTheme.typography.titleLarge,
-                        )
-                        Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingExtraSmall))
-                        Text(
-                            modifier = modifier.align(Alignment.Top),
-                            text = "${deal.normalPrice}$currencySign",
-                            style = MaterialTheme.typography.titleSmall.copy(textDecoration = TextDecoration.LineThrough),
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    } else {
-                        Text(
-                            text = "${deal.salePrice}$currencySign",
-                            style = MaterialTheme.typography.titleSmall,
-                        )
+                    Row(verticalAlignment = Alignment.Bottom) {
+                        deal.releaseDate?.let { date ->
+                            Text(
+                                text = date,
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        }
+                        Spacer(modifier = Modifier.weight(1F))
+                        if (deal.isOnSale) {
+                            Text(
+                                text = "${deal.salePrice}$currencySign",
+                                color = MaterialTheme.colorScheme.primary,
+                                style = MaterialTheme.typography.titleLarge,
+                            )
+                            Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingExtraSmall))
+                            Text(
+                                modifier = modifier.align(Alignment.Top),
+                                text = "${deal.normalPrice}$currencySign",
+                                style = MaterialTheme.typography.titleSmall.copy(textDecoration = TextDecoration.LineThrough),
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        } else {
+                            Text(
+                                text = "${deal.salePrice}$currencySign",
+                                style = MaterialTheme.typography.titleSmall,
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
                     }
-                    Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
                 }
             }
-        }
-        if (deal.steamRatingCount > 0) {
-            BottomDealText(
+            RatingText(
                 modifier = Modifier.padding(Resources.dimens.viewsSpacingExtraSmall),
                 deal = deal,
             )
+            Spacer(modifier = Modifier.height(Resources.dimens.viewsSpacingExtraSmall))
         }
-        Spacer(modifier = Modifier.height(Resources.dimens.viewsSpacingExtraSmall))
     }
 }
