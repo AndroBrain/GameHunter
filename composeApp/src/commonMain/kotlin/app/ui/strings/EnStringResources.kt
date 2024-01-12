@@ -5,6 +5,6 @@ class EnStringResources : StringResources {
         get() = "GameHunter"
     override val currencySign: String
         get() = "$"
-    override val buy: String
-        get() = "Buy"
+    override val steamReviews: String
+        get() = "steam reviews"
 }

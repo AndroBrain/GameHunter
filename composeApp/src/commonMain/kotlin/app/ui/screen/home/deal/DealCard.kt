@@ -94,7 +94,7 @@ fun DealCard(
             }
         }
         if (deal.steamRatingCount > 0) {
-            ReviewText(
+            BottomDealText(
                 modifier = Modifier.padding(Resources.dimens.viewsSpacingExtraSmall),
                 deal = deal,
             )

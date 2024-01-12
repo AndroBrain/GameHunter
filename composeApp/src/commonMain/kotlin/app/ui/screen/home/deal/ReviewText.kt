@@ -4,18 +4,20 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import app.ui.theme.Resources
 import domain.deal.DealModel
 
 private const val MIN_POSITIVE_PERCENT = 70
 private const val MIN_MEDIUM_PERCENT = 40
 
 @Composable
-fun ReviewText(modifier: Modifier = Modifier, deal: DealModel) {
+fun BottomDealText(modifier: Modifier = Modifier, deal: DealModel) {
     val ratingText =
         deal.steamRatingText ?: (deal.steamRatingPercent.toString() + "%")
-    Row(modifier = modifier) {
+    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         val style = MaterialTheme.typography.bodyMedium
         Text(
             modifier = modifier,
@@ -28,7 +30,7 @@ fun ReviewText(modifier: Modifier = Modifier, deal: DealModel) {
             }
         )
         Text(
-            text = " | ${deal.steamRatingCount} steam reviews",
+            text = " | ${deal.steamRatingCount} ${Resources.strings.steamReviews}",
             style = style,
             minLines = 1,
             maxLines = 1,
