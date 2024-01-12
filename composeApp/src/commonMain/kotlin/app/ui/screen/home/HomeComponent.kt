@@ -3,7 +3,9 @@ package app.ui.screen.home
 import app.util.BrowserOpener
 import app.util.coroutineScope
 import com.arkivanov.decompose.ComponentContext
+import domain.deal.DealParams
 import domain.deal.GetDealsUseCase
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +16,8 @@ import kotlinx.coroutines.launch
 interface HomeComponent {
     val state: StateFlow<HomeState>
 
-    fun getDeals()
+    fun getInitialDeals()
+    fun getMoreDeals()
     fun openInBrowser(url: String)
 }
 
@@ -27,11 +30,30 @@ class DefaultHomeComponent(
     override val state = _state.asStateFlow()
 
     private val scope = coroutineScope(SupervisorJob())
+    private var loadMoreJob: Job? = null
 
-    override fun getDeals() {
+    override fun getInitialDeals() {
         scope.launch {
-            val games = getDealsUseCase()
-            _state.update { state -> state.copy(deals = games, isLoadingInitial = false) }
+            val deals = getDealsUseCase(DealParams(pageNumber = 0))
+            _state.update { state -> state.copy(deals = deals, isLoadingInitial = false, page = 1) }
+        }
+    }
+
+    override fun getMoreDeals() {
+        if (loadMoreJob != null) return
+        _state.update { state -> state.copy(isLoadingMore = true) }
+        loadMoreJob = scope.launch {
+            val deals = getDealsUseCase(DealParams(pageNumber = state.value.page))
+            _state.update { state ->
+                state.copy(
+                    deals = state.deals + deals,
+                    isLoadingMore = false,
+                    page = state.page + 1,
+                )
+            }
+        }
+        loadMoreJob?.invokeOnCompletion {
+            loadMoreJob = null
         }
     }
 

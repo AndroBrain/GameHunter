@@ -1,5 +1,5 @@
 package domain.deal
 
 interface DealRepository {
-    suspend fun getDeals(): List<DealModel>
+    suspend fun getDeals(params: DealParams): List<DealModel>
 }

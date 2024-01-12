@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
@@ -22,15 +24,25 @@ import androidx.compose.ui.Modifier
 import app.ui.theme.Resources
 import app.util.dealLink
 
+private const val ITEMS_TO_SHOW_MORE_DEALS = 5
+
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     component: HomeComponent,
 ) {
-    LaunchedEffect(Unit) {
-        component.getDeals()
-    }
+    val gridState = rememberLazyGridState()
     val state by component.state.collectAsState()
+    LaunchedEffect(Unit) {
+        component.getInitialDeals()
+    }
+    val visibleItemsInfo = gridState.layoutInfo.visibleItemsInfo
+    LaunchedEffect(visibleItemsInfo) {
+        val lastVisibleItem = visibleItemsInfo.lastOrNull() ?: return@LaunchedEffect
+        if (lastVisibleItem.index + ITEMS_TO_SHOW_MORE_DEALS > gridState.layoutInfo.totalItemsCount) {
+            component.getMoreDeals()
+        }
+    }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -52,6 +64,7 @@ fun HomeScreen(
                 }
             } else {
                 LazyVerticalGrid(
+                    state = gridState,
                     modifier = Modifier.fillMaxSize(),
                     columns = GridCells.Adaptive(minSize = Resources.dimens.dealMinSize),
                     contentPadding = PaddingValues(
@@ -68,6 +81,13 @@ fun HomeScreen(
                             deal = deal,
                             onClick = { component.openInBrowser(dealLink(deal.dealID)) },
                         )
+                    }
+                    if (state.isLoadingMore) {
+                        item(span = { GridItemSpan(maxLineSpan) }) {
+                            Box(modifier = Modifier.fillMaxSize()) {
+                                CircularProgressIndicator(modifier = Modifier.align(Alignment.TopCenter))
+                            }
+                        }
                     }
                 }
             }
