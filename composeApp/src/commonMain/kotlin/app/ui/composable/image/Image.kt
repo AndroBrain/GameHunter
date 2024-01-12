@@ -16,12 +16,13 @@ fun AsyncImage(
     modifier: Modifier = Modifier,
     url: String,
     contentDescription: String? = null,
+    contentScale: ContentScale = ContentScale.Crop,
 ) {
     KamelImage(
         modifier = modifier,
         resource = asyncPainterResource(url) { coroutineContext = Job() + Dispatchers.IO },
         contentDescription = contentDescription,
         onLoading = { CircularProgressIndicator(modifier = Modifier.align(Alignment.Center)) },
-        contentScale = ContentScale.Crop,
+        contentScale = contentScale,
     )
 }

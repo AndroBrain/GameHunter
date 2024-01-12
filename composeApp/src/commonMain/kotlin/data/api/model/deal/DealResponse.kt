@@ -32,9 +32,9 @@ data class DealResponse(
     @SerialName("steamAppID")
     val steamAppID: String?,
     @SerialName("steamRatingCount")
-    val steamRatingCount: String,
+    val steamRatingCount: Int,
     @SerialName("steamRatingPercent")
-    val steamRatingPercent: String,
+    val steamRatingPercent: Int,
     @SerialName("steamRatingText")
     val steamRatingText: String?,
     @SerialName("storeID")

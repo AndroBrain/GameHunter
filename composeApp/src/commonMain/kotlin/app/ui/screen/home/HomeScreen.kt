@@ -21,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import app.ui.screen.home.deal.DealCard
 import app.ui.theme.Resources
 import app.util.dealLink
 
@@ -79,6 +80,7 @@ fun HomeScreen(
                         DealCard(
                             modifier = dealModifier,
                             deal = deal,
+// TODO show a dialog with all possible stores with corresponding buttons, also add ability to setup email notifications
                             onClick = { component.openInBrowser(dealLink(deal.dealID)) },
                         )
                     }
