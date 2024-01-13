@@ -32,7 +32,7 @@ fun GameDeal(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "${deal.price}${Resources.strings.currencySign} ${deal.priceDifference}",
+                text = "${deal.price}${Resources.strings.currencySign} ",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
             )
