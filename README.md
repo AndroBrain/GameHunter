@@ -1,14 +1,23 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
+## Tech Stack
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+| What                                    | How                                                                                                                                                                             |
+|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 🖥️ User Interface (Android, Desktop)    | Jetpack Compose                                                                                                          |
+| 🧩 Architecture                         | MVVM + Clean Architecture                                                                                                        |
+| 💉 DI                                   | Manual (SharedModule + FrameworkModule)                                                                                                                                                 |
+| 🔃 Async                                | Coroutines + Flow | |
+| 🗃️ Data Storage                         | SqlDelight 
+| 🌐 Networking                           | Ktor Client
+| 🖼️ Image loading                        | Kamel
+| 🧭 Navigation & Shared ViewModels       | Decompose
+| 🎨 Design system                        | Material Design 3
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## What is shared and what is not?
+| What                                    | What is shared?                                                                                                                                                                            |
+|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Domain layer                            | Everything
+| Data layer                              | Everything
+| Presentation layer                      | Almost everything, opening link in the browser is not shared
 
-
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+## API
+The app currently uses [Cheap Shark API](https://apidocs.cheapshark.com/#a2620d3f-683e-0396-61e7-3fe4d30ea376) to get all the game deals, thumbnails, prices etc.
