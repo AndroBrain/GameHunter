@@ -50,9 +50,7 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = {
-                    Text(text = Resources.strings.appName)
-                }
+                title = { Text(text = Resources.strings.appName) }
             )
         },
         modifier = modifier,
@@ -83,7 +81,6 @@ fun HomeScreen(
                         DealCard(
                             modifier = dealModifier,
                             deal = deal,
-// TODO show a dialog with all possible stores with corresponding buttons, also add ability to setup email notifications
                             onClick = {
                                 component.openGame(deal.gameID)
                             },

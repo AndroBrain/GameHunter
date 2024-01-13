@@ -39,9 +39,7 @@ class DefaultGameComponent(
             val gameWithDeals = getGameWithDealsUseCase(gameID)
             _state.update { state ->
                 state.copy(
-                    gameWithDeals = GameWithDealsDisplayable(gameWithDeals, shops).also {
-                        println(it)
-                    },
+                    gameWithDeals = GameWithDealsDisplayable(gameWithDeals, shops),
                 )
             }
         }

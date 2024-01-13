@@ -25,8 +25,6 @@ data class GameWithDealsDisplayable(
                     storeName = shops[deal.storeID]?.storeName.orEmpty(),
                     storeIcon = "https://www.cheapshark.com${shops[deal.storeID]?.images?.logo.orEmpty()}",
                     price = deal.price,
-                    // TODO remove it or fix it
-                    priceDifference = "",
                 )
             }
             .toList(),

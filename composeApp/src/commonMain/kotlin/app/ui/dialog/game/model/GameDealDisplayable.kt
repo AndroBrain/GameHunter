@@ -5,5 +5,4 @@ data class GameDealDisplayable(
     val storeName: String,
     val storeIcon: String,
     val price: String,
-    val priceDifference: String,
 )

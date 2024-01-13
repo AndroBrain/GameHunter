@@ -37,7 +37,6 @@ class KtorDealDataSource : DealDataSource {
                 }
             }
         }
-        println(response.bodyAsText())
         return Json.decodeFromString<GameWithDealsResponse>(
             response.bodyAsText()
         )

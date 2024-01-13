@@ -52,7 +52,6 @@ class DefaultHomeComponent(
             serializer = null,
             handleBackButton = true,
             childFactory = { config, context ->
-                // TODO protect this code if the shops are not loaded by displaying error message
                 DefaultGameComponent(
                     context = context,
                     gameID = config.gameID,
@@ -68,7 +67,6 @@ class DefaultHomeComponent(
     init {
         scope.launch {
             val shops = getShopsUseCase()
-//            println(shops)
             _state.update { state -> state.copy(shops = shops) }
         }
     }
