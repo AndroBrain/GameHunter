@@ -40,7 +40,7 @@ fun RatingText(modifier: Modifier = Modifier, deal: DealModel) {
                 text = ratingText,
                 style = style,
                 color = when {
-                    deal.steamRatingPercent > MIN_POSITIVE_PERCENT -> MaterialTheme.colorScheme.primary
+                    deal.steamRatingPercent > MIN_POSITIVE_PERCENT -> MaterialTheme.colorScheme.tertiary
                     deal.steamRatingPercent > MIN_MEDIUM_PERCENT -> MaterialTheme.colorScheme.secondary
                     else -> MaterialTheme.colorScheme.error
                 }
