@@ -1,14 +1,29 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
+## Tech Stack
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+| What                                    | How                                                                                                                                                                             |
+|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 🖥️ User Interface (Android, Desktop)    | [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/)                                                                                                          |
+| 🧩 Architecture                         | MVVM + Clean Architecture                                                                                                        |
+| 💉 DI                                   | Manual (SharedModule + FrameworkModule)                                                                                                                                                 |
+| 🔃 Async                                | [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) + [Flow](https://kotlinlang.org/docs/flow.html) | |
+| 🗃️ Data Storage                         | [SqlDelight](https://github.com/cashapp/sqldelight) 
+| 🌐 Networking                           | [Ktor](https://ktor.io/docs/getting-started-ktor-client.html)
+| 🖼️ Image loading                        | [Kamel](https://github.com/Kamel-Media/Kamel)
+| 🧭 Navigation & Shared ViewModels       | [Decompose](https://github.com/arkivanov/Decompose)
+| 🎨 Design system                        | [Material Design 3](https://m3.material.io/)
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## What is shared and what is not?
+| What                                    | What is shared?                                                                                                                                                                            |
+|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Domain layer                            | Everything
+| Data layer                              | Everything
+| Presentation layer                      | Almost everything, opening link in the browser is not shared
 
+## Tools used to create the project
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+* Android Studio Hedgehog | 2023.1.1
+* [Material Theme Builder](https://material-foundation.github.io/material-theme-builder)
+* [KMP Wizard](https://kmp.jetbrains.com/)
+
+## API
+The app currently uses [Cheap Shark API](https://apidocs.cheapshark.com/#a2620d3f-683e-0396-61e7-3fe4d30ea376) to get all the game deals, thumbnails, prices etc.
