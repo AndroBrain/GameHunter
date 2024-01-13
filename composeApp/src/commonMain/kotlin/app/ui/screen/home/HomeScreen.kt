@@ -70,9 +70,9 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxSize(),
                     columns = GridCells.Adaptive(minSize = Resources.dimens.dealMinSize),
                     contentPadding = PaddingValues(
-                        start = Resources.dimens.screenSpacingMedium,
+                        start = Resources.dimens.screenSpacingSmall,
                         top = Resources.dimens.screenSpacingSmall,
-                        end = Resources.dimens.screenSpacingMedium,
+                        end = Resources.dimens.screenSpacingSmall,
                         bottom = Resources.dimens.screenSpacingMedium,
                     ),
                     horizontalArrangement = Arrangement.spacedBy(Resources.dimens.viewsSpacingSmall)
