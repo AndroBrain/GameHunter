@@ -16,7 +16,12 @@ data class Dimensions(
     val viewsSpacingLarge: Dp = 24.dp,
     val viewsSpacingExtraLarge: Dp = 32.dp,
 
+    val dialogHeight: Dp = 420.dp,
+    val dialogWidth: Dp = 400.dp,
+
     val dealMinSize: Dp = 320.dp,
     val dealImageWidth: Dp = 84.dp,
     val dealImageHeight: Dp = 84.dp,
+
+    val shopIconSize: Dp = 36.dp,
 )

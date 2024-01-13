@@ -2,7 +2,7 @@ package data.datasource.deal
 
 import data.api.HOST_URL
 import data.api.model.deal.DealResponse
-import data.api.model.deal.game.GameWithDealsReponse
+import data.api.model.deal.game.GameWithDealsResponse
 import data.api.useClient
 import domain.deal.DealParams
 import io.ktor.client.request.get
@@ -29,7 +29,7 @@ class KtorDealDataSource : DealDataSource {
         )
     }
 
-    override suspend fun getGameWithDeals(gameID: String): GameWithDealsReponse {
+    override suspend fun getGameWithDeals(gameID: String): GameWithDealsResponse {
         val response = useClient { client ->
             client.get("$HOST_URL/$GAMES_PATH") {
                 url {
@@ -37,7 +37,8 @@ class KtorDealDataSource : DealDataSource {
                 }
             }
         }
-        return Json.decodeFromString<GameWithDealsReponse>(
+        println(response.bodyAsText())
+        return Json.decodeFromString<GameWithDealsResponse>(
             response.bodyAsText()
         )
     }

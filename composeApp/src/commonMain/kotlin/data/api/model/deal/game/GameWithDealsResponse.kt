@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GameWithDealsReponse(
+data class GameWithDealsResponse(
     @SerialName("cheapestPriceEver")
     val cheapestPriceEver: CheapestPriceResponse,
     @SerialName("deals")

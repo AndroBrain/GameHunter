@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -21,9 +23,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import app.ui.dialog.game.GameDialog
 import app.ui.screen.home.deal.DealCard
 import app.ui.theme.Resources
-import app.util.dealLink
+import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 
 private const val ITEMS_TO_SHOW_MORE_DEALS = 5
 
@@ -81,7 +84,9 @@ fun HomeScreen(
                             modifier = dealModifier,
                             deal = deal,
 // TODO show a dialog with all possible stores with corresponding buttons, also add ability to setup email notifications
-                            onClick = { component.openInBrowser(dealLink(deal.dealID)) },
+                            onClick = {
+                                component.openGame(deal.gameID)
+                            },
                         )
                     }
                     if (state.isLoadingMore) {
@@ -93,6 +98,15 @@ fun HomeScreen(
                     }
                 }
             }
+        }
+
+        val gameSlot by component.gameSlot.subscribeAsState()
+        gameSlot.child?.instance?.let {
+            GameDialog(
+                modifier = Modifier.height(Resources.dimens.dialogHeight)
+                    .width(Resources.dimens.dialogWidth),
+                component = it,
+            )
         }
     }
 }

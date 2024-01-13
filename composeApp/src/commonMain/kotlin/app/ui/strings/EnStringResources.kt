@@ -11,4 +11,8 @@ class EnStringResources : StringResources {
         get() = "Deal rating: "
     override val steamRating: String
         get() = " | Steam rating: "
+    override val cheapestPriceEver: String
+        get() = " — cheapest price ever"
+    override val getInTheseShops: String
+        get() = "Get the game in these shops:"
 }

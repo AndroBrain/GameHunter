@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GameInfoResponse(
     @SerialName("steamAppID")
-    val steamAppID: String,
+    val steamAppID: String?,
     @SerialName("thumb")
     val thumb: String,
     @SerialName("title")

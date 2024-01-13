@@ -6,4 +6,7 @@ interface StringResources {
     val steamReviews: String
     val dealRating: String
     val steamRating: String
+
+    val cheapestPriceEver: String
+    val getInTheseShops: String
 }

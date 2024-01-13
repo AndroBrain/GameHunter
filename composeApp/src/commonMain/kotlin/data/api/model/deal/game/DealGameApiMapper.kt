@@ -5,7 +5,7 @@ import domain.deal.game.GameDealModel
 import domain.deal.game.GameInfoModel
 import domain.deal.game.GameWithDealsModel
 
-fun GameWithDealsReponse.toModel() =
+fun GameWithDealsResponse.toModel() =
     GameWithDealsModel(
         cheapestPriceEver = cheapestPriceEver.toModel(),
         deals = deals.toModels(),

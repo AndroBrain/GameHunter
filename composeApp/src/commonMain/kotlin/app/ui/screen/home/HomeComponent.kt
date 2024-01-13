@@ -1,10 +1,19 @@
 package app.ui.screen.home
 
+import app.ui.dialog.game.DefaultGameComponent
+import app.ui.dialog.game.GameComponent
 import app.util.BrowserOpener
 import app.util.coroutineScope
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.slot.ChildSlot
+import com.arkivanov.decompose.router.slot.SlotNavigation
+import com.arkivanov.decompose.router.slot.activate
+import com.arkivanov.decompose.router.slot.childSlot
+import com.arkivanov.decompose.router.slot.dismiss
+import com.arkivanov.decompose.value.Value
 import domain.deal.DealParams
 import domain.deal.GetDealsUseCase
+import domain.deal.game.GetGameWithDealsUseCase
 import domain.shop.GetShopsUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
@@ -16,16 +25,18 @@ import kotlinx.coroutines.launch
 
 interface HomeComponent {
     val state: StateFlow<HomeState>
+    val gameSlot: Value<ChildSlot<*, GameComponent>>
 
     fun getInitialDeals()
     fun getMoreDeals()
-    fun openInBrowser(url: String)
+    fun openGame(gameID: String)
 }
 
 class DefaultHomeComponent(
     context: ComponentContext,
     private val getDealsUseCase: GetDealsUseCase,
     private val getShopsUseCase: GetShopsUseCase,
+    private val getGameWithDealsUseCase: GetGameWithDealsUseCase,
     private val browserOpener: BrowserOpener,
 ) : HomeComponent, ComponentContext by context {
     private val _state = MutableStateFlow(HomeState())
@@ -34,10 +45,30 @@ class DefaultHomeComponent(
     private val scope = coroutineScope(SupervisorJob())
     private var loadMoreJob: Job? = null
 
+    private val gameNavigation = SlotNavigation<GameConfig>()
+    private val _gameSlot =
+        childSlot<GameConfig, GameComponent>(
+            source = gameNavigation,
+            serializer = null,
+            handleBackButton = true,
+            childFactory = { config, context ->
+                // TODO protect this code if the shops are not loaded by displaying error message
+                DefaultGameComponent(
+                    context = context,
+                    gameID = config.gameID,
+                    getGameWithDealsUseCase = getGameWithDealsUseCase,
+                    dismiss = gameNavigation::dismiss,
+                    browserOpener = browserOpener,
+                    shops = state.value.shops.groupBy { it.storeID }.mapValues { it.value.first() },
+                )
+            }
+        )
+    override val gameSlot: Value<ChildSlot<*, GameComponent>> = _gameSlot
+
     init {
         scope.launch {
             val shops = getShopsUseCase()
-            println(shops)
+//            println(shops)
             _state.update { state -> state.copy(shops = shops) }
         }
     }
@@ -67,7 +98,11 @@ class DefaultHomeComponent(
         }
     }
 
-    override fun openInBrowser(url: String) {
-        browserOpener.openLink(url)
+    override fun openGame(gameID: String) {
+        gameNavigation.activate(GameConfig(gameID = gameID))
     }
+
+    private data class GameConfig(
+        val gameID: String,
+    )
 }
