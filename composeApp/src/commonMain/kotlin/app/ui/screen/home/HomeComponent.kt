@@ -12,6 +12,7 @@ import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
 import domain.deal.DealParams
+import domain.deal.DealSortingType
 import domain.deal.GetDealsUseCase
 import domain.deal.game.GetGameWithDealsUseCase
 import domain.shop.GetShopsUseCase
@@ -30,6 +31,7 @@ interface HomeComponent {
     fun getInitialDeals()
     fun getMoreDeals()
     fun openGame(gameID: String)
+    fun changeSorting(type: DealSortingType)
 }
 
 class DefaultHomeComponent(
@@ -44,6 +46,7 @@ class DefaultHomeComponent(
 
     private val scope = coroutineScope(SupervisorJob())
     private var loadMoreJob: Job? = null
+    private var loadInitialJob: Job? = null
 
     private val gameNavigation = SlotNavigation<GameConfig>()
     private val _gameSlot =
@@ -72,9 +75,14 @@ class DefaultHomeComponent(
     }
 
     override fun getInitialDeals() {
-        scope.launch {
-            val deals = getDealsUseCase(DealParams(pageNumber = 0))
+        loadInitialJob?.cancel()
+        _state.update { state -> state.copy(isLoadingInitial = true) }
+        loadInitialJob = scope.launch {
+            val deals = getDealsUseCase(DealParams(pageNumber = 0, state.value.sortingType))
             _state.update { state -> state.copy(deals = deals, isLoadingInitial = false, page = 1) }
+        }
+        loadInitialJob?.invokeOnCompletion {
+            loadInitialJob = null
         }
     }
 
@@ -82,7 +90,8 @@ class DefaultHomeComponent(
         if (loadMoreJob != null) return
         _state.update { state -> state.copy(isLoadingMore = true) }
         loadMoreJob = scope.launch {
-            val deals = getDealsUseCase(DealParams(pageNumber = state.value.page))
+            val deals =
+                getDealsUseCase(DealParams(pageNumber = state.value.page, state.value.sortingType))
             _state.update { state ->
                 state.copy(
                     deals = state.deals + deals,
@@ -98,6 +107,16 @@ class DefaultHomeComponent(
 
     override fun openGame(gameID: String) {
         gameNavigation.activate(GameConfig(gameID = gameID))
+    }
+
+    override fun changeSorting(type: DealSortingType) {
+        val previousSortingType = state.value.sortingType
+        _state.update { state ->
+            state.copy(sortingType = type)
+        }
+        if (previousSortingType != type) {
+            getInitialDeals()
+        }
     }
 
     private data class GameConfig(

@@ -1,6 +1,7 @@
 package app.ui.screen.home
 
 import domain.deal.DealModel
+import domain.deal.DealSortingType
 import domain.shop.ShopModel
 
 data class HomeState(
@@ -9,4 +10,5 @@ data class HomeState(
     val isLoadingMore: Boolean = false,
     val page: Int = 0,
     val shops: List<ShopModel> = emptyList(),
+    val sortingType: DealSortingType = DealSortingType.DEAL_RATING,
 )

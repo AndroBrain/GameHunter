@@ -1,5 +1,7 @@
 package app.ui.strings
 
+import domain.deal.DealSortingType
+
 class EnStringResources : StringResources {
     override val appName: String
         get() = "GameHunter"
@@ -15,4 +17,17 @@ class EnStringResources : StringResources {
         get() = " — cheapest price ever"
     override val getInTheseShops: String
         get() = "Get the game in these shops:"
+
+    override val sortedBy: String
+        get() = "Sorted by"
+
+    override fun sortingType(sortingType: DealSortingType): String = when (sortingType) {
+        DealSortingType.DEAL_RATING -> "Deal rating"
+        DealSortingType.TITLE -> "Title"
+        DealSortingType.SAVINGS -> "% Saved on deal"
+        DealSortingType.PRICE -> "Price"
+        DealSortingType.REVIEWS -> "Steam reviews"
+        DealSortingType.RELEASE -> "Release"
+        DealSortingType.RECENT -> "Recent"
+    }
 }

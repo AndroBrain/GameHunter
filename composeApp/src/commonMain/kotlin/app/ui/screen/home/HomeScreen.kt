@@ -3,6 +3,7 @@ package app.ui.screen.home
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -25,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import app.ui.dialog.game.GameDialog
 import app.ui.screen.home.deal.DealCard
+import app.ui.screen.home.params.DealParams
 import app.ui.theme.Resources
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 
@@ -60,36 +62,43 @@ fun HomeScreen(
             modifier = Modifier.padding(insets).fillMaxSize(),
             targetState = state.isLoadingInitial,
         ) { isLoadingInitial ->
-            if (isLoadingInitial) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                }
-            } else {
-                LazyVerticalGrid(
-                    state = gridState,
-                    modifier = Modifier.fillMaxSize(),
-                    columns = GridCells.Adaptive(minSize = Resources.dimens.dealMinSize),
-                    contentPadding = PaddingValues(
-                        start = Resources.dimens.screenSpacingSmall,
-                        top = Resources.dimens.screenSpacingSmall,
-                        end = Resources.dimens.screenSpacingSmall,
-                        bottom = Resources.dimens.screenSpacingMedium,
-                    ),
-                    horizontalArrangement = Arrangement.spacedBy(Resources.dimens.viewsSpacingSmall)
-                ) {
-                    items(state.deals) { deal ->
-                        DealCard(
-                            modifier = dealModifier,
-                            deal = deal,
-                            onClick = {
-                                component.openGame(deal.gameID)
-                            },
-                        )
+            Column(modifier = Modifier.fillMaxSize()) {
+                DealParams(
+                    modifier = Modifier.padding(vertical = Resources.dimens.viewsSpacingSmall),
+                    state = state,
+                    component = component,
+                )
+                if (isLoadingInitial) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                     }
-                    if (state.isLoadingMore) {
-                        item(span = { GridItemSpan(maxLineSpan) }) {
-                            Box(modifier = Modifier.fillMaxSize()) {
-                                CircularProgressIndicator(modifier = Modifier.align(Alignment.TopCenter))
+                } else {
+                    LazyVerticalGrid(
+                        state = gridState,
+                        modifier = Modifier.fillMaxSize(),
+                        columns = GridCells.Adaptive(minSize = Resources.dimens.dealMinSize),
+                        contentPadding = PaddingValues(
+                            start = Resources.dimens.screenSpacingSmall,
+                            top = Resources.dimens.screenSpacingSmall,
+                            end = Resources.dimens.screenSpacingSmall,
+                            bottom = Resources.dimens.screenSpacingMedium,
+                        ),
+                        horizontalArrangement = Arrangement.spacedBy(Resources.dimens.viewsSpacingSmall)
+                    ) {
+                        items(state.deals) { deal ->
+                            DealCard(
+                                modifier = dealModifier,
+                                deal = deal,
+                                onClick = {
+                                    component.openGame(deal.gameID)
+                                },
+                            )
+                        }
+                        if (state.isLoadingMore) {
+                            item(span = { GridItemSpan(maxLineSpan) }) {
+                                Box(modifier = Modifier.fillMaxSize()) {
+                                    CircularProgressIndicator(modifier = Modifier.align(Alignment.TopCenter))
+                                }
                             }
                         }
                     }

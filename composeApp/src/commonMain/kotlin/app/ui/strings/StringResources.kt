@@ -1,5 +1,7 @@
 package app.ui.strings
 
+import domain.deal.DealSortingType
+
 interface StringResources {
     val appName: String
     val currencySign: String
@@ -9,4 +11,7 @@ interface StringResources {
 
     val cheapestPriceEver: String
     val getInTheseShops: String
+
+    val sortedBy: String
+    fun sortingType(sortingType: DealSortingType): String
 }
