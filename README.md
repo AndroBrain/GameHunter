@@ -24,6 +24,7 @@
 * Android Studio Hedgehog | 2023.1.1
 * [Material Theme Builder](https://material-foundation.github.io/material-theme-builder)
 * [KMP Wizard](https://kmp.jetbrains.com/)
+* App Icon created using [Figma](https://www.figma.com/) with resources from [svgrepo.com](svgrepo.com) and [Google Fonts](https://fonts.google.com/icons)
 
 ## API
 The app currently uses [Cheap Shark API](https://apidocs.cheapshark.com/#a2620d3f-683e-0396-61e7-3fe4d30ea376) to get all the game deals, thumbnails, prices etc.
