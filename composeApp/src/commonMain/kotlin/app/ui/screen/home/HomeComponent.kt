@@ -11,6 +11,7 @@ import com.arkivanov.decompose.router.slot.activate
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
+import domain.alert.GetAlertEmailUseCase
 import domain.alert.SetAlertUseCase
 import domain.deal.DealParams
 import domain.deal.DealSortingType
@@ -43,6 +44,7 @@ class DefaultHomeComponent(
     private val getDealsUseCase: GetDealsUseCase,
     private val getShopsUseCase: GetShopsUseCase,
     private val getGameWithDealsUseCase: GetGameWithDealsUseCase,
+    private val getAlertEmailUseCase: GetAlertEmailUseCase,
     private val setAlertUseCase: SetAlertUseCase,
     private val browserOpener: BrowserOpener,
 ) : HomeComponent, ComponentContext by context {
@@ -68,6 +70,7 @@ class DefaultHomeComponent(
                     browserOpener = browserOpener,
                     shops = state.value.shops.groupBy { it.storeID }.mapValues { it.value.first() },
                     setAlertUseCase = setAlertUseCase,
+                    getAlertEmailUseCase = getAlertEmailUseCase,
                 )
             }
         )

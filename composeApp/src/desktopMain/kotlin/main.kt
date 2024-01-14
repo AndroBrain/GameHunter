@@ -17,10 +17,11 @@ fun main() {
     val lifecycle = LifecycleRegistry()
 
     val root: RootComponent = runOnUiThread {
+        val frameworkModule = DesktopFrameworkModule()
         DefaultRootComponent(
             context = DefaultComponentContext(lifecycle = lifecycle),
-            sharedModule = DefaultSharedModule(),
-            frameworkModule = DesktopFrameworkModule(),
+            sharedModule = DefaultSharedModule(frameworkModule.provideDatabase()),
+            frameworkModule = frameworkModule,
         )
     }
     application {

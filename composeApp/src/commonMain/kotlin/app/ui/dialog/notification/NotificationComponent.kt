@@ -4,6 +4,7 @@ import app.util.DecimalFormatter
 import app.util.Patterns
 import app.util.coroutineScope
 import com.arkivanov.decompose.ComponentContext
+import domain.alert.GetAlertEmailUseCase
 import domain.alert.SetAlertParams
 import domain.alert.SetAlertUseCase
 import kotlinx.coroutines.SupervisorJob
@@ -25,6 +26,7 @@ class DefaultNotificationComponent(
     context: ComponentContext,
     gameName: String,
     private val setAlertUseCase: SetAlertUseCase,
+    private val getAlertEmailUseCase: GetAlertEmailUseCase,
     private val dismiss: () -> Unit,
     private val gameID: String,
 ) : NotificationComponent, ComponentContext by context {
@@ -32,6 +34,14 @@ class DefaultNotificationComponent(
     override val state: StateFlow<NotificationState> = _state.asStateFlow()
 
     private val scope = coroutineScope(SupervisorJob())
+
+    init {
+        scope.launch {
+            val email = getAlertEmailUseCase()
+            changeEmail(email.orEmpty())
+        }
+    }
+
     override fun onDismiss() {
         dismiss()
     }

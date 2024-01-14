@@ -1,0 +1,11 @@
+CREATE TABLE EmailEntity (
+    id INTEGER NOT NULL PRIMARY KEY,
+    email TEXT NOT NULL
+);
+
+insert:
+INSERT OR REPLACE INTO EmailEntity(id, email)
+VALUES(0,?);
+
+get:
+SELECT * FROM EmailEntity LIMIT 1;

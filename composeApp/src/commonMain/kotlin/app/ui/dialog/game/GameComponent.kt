@@ -13,6 +13,7 @@ import com.arkivanov.decompose.router.slot.activate
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
+import domain.alert.GetAlertEmailUseCase
 import domain.alert.SetAlertUseCase
 import domain.deal.game.GetGameWithDealsUseCase
 import domain.shop.ShopModel
@@ -37,6 +38,7 @@ class DefaultGameComponent(
     private val gameID: String,
     private val getGameWithDealsUseCase: GetGameWithDealsUseCase,
     private val setAlertUseCase: SetAlertUseCase,
+    private val getAlertEmailUseCase: GetAlertEmailUseCase,
     private val browserOpener: BrowserOpener,
     private val shops: Map<String, ShopModel>,
 ) : GameComponent, ComponentContext by context {
@@ -56,6 +58,7 @@ class DefaultGameComponent(
                     gameID = config.gameID,
                     dismiss = notificationNavigation::dismiss,
                     setAlertUseCase = setAlertUseCase,
+                    getAlertEmailUseCase = getAlertEmailUseCase,
                 )
             }
         )

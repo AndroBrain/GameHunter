@@ -15,10 +15,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val root: RootComponent = retainedComponent { componentContext ->
+            val frameworkModule = AndroidFrameworkModule(context = applicationContext)
             DefaultRootComponent(
                 context = componentContext,
-                sharedModule = DefaultSharedModule(),
-                frameworkModule = AndroidFrameworkModule(context = applicationContext),
+                sharedModule = DefaultSharedModule(frameworkModule.provideDatabase()),
+                frameworkModule = frameworkModule,
             )
         }
 

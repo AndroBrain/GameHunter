@@ -39,6 +39,7 @@ class DefaultRootComponent(
                 getShopsUseCase = sharedModule.provideGetShopsUseCase(),
                 getGameWithDealsUseCase = sharedModule.provideGetGameWithDealsUseCase(),
                 setAlertUseCase = sharedModule.provideSetAlertUseCase(),
+                getAlertEmailUseCase = sharedModule.provideGetAlertEmailUseCase(),
                 browserOpener = frameworkModule.provideBrowserOpener(),
             )
         )
