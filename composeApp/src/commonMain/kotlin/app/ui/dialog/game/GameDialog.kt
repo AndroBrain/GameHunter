@@ -16,7 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
+import app.ui.dialog.notification.NotificationDialog
 import app.ui.theme.Resources
+import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 
 @Composable
 fun GameDialog(
@@ -49,9 +51,15 @@ fun GameDialog(
                             .padding(Resources.dimens.viewsSpacingMedium),
                         gameWithDeals = gameWithDeals,
                         onDealClick = component::openInStore,
+                        setupAlert = component::setupAlert,
                     )
                 }
             }
         }
+    }
+
+    val slot by component.notificationSlot.subscribeAsState()
+    slot.child?.instance?.let {
+        NotificationDialog(component = it)
     }
 }

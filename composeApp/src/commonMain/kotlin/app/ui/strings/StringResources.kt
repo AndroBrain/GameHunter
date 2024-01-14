@@ -17,4 +17,10 @@ interface StringResources {
     val noLimit: String
     val maxPrice: String
     fun onSaleOnly(onSale: Boolean): String
+
+    val notificationEmail: String
+    val notificationMaxPrice: String
+    val sendNotification: String
+
+    val invalidEmail: String
 }
