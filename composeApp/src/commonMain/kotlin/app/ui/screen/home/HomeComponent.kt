@@ -11,6 +11,7 @@ import com.arkivanov.decompose.router.slot.activate
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
+import domain.alert.SetAlertUseCase
 import domain.deal.DealParams
 import domain.deal.DealSortingType
 import domain.deal.GetDealsUseCase
@@ -42,6 +43,7 @@ class DefaultHomeComponent(
     private val getDealsUseCase: GetDealsUseCase,
     private val getShopsUseCase: GetShopsUseCase,
     private val getGameWithDealsUseCase: GetGameWithDealsUseCase,
+    private val setAlertUseCase: SetAlertUseCase,
     private val browserOpener: BrowserOpener,
 ) : HomeComponent, ComponentContext by context {
     private val _state = MutableStateFlow(HomeState())
@@ -65,6 +67,7 @@ class DefaultHomeComponent(
                     dismiss = gameNavigation::dismiss,
                     browserOpener = browserOpener,
                     shops = state.value.shops.groupBy { it.storeID }.mapValues { it.value.first() },
+                    setAlertUseCase = setAlertUseCase,
                 )
             }
         )

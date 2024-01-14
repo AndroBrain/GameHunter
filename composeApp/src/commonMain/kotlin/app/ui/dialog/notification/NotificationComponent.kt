@@ -4,8 +4,9 @@ import app.util.DecimalFormatter
 import app.util.Patterns
 import app.util.coroutineScope
 import com.arkivanov.decompose.ComponentContext
+import domain.alert.SetAlertParams
+import domain.alert.SetAlertUseCase
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,6 +24,7 @@ interface NotificationComponent {
 class DefaultNotificationComponent(
     context: ComponentContext,
     gameName: String,
+    private val setAlertUseCase: SetAlertUseCase,
     private val dismiss: () -> Unit,
     private val gameID: String,
 ) : NotificationComponent, ComponentContext by context {
@@ -48,10 +50,14 @@ class DefaultNotificationComponent(
     }
 
     override fun setAlert() {
-//        TODO start loading > send on backend > stop loading > dismiss
         _state.update { state -> state.copy(isLoading = true) }
         scope.launch {
-            delay(3000L)
+            val currentState = state.value
+            setAlertUseCase(
+                SetAlertParams(
+                    email = currentState.email, gameID = gameID, price = currentState.price,
+                )
+            )
             _state.update { state -> state.copy(isLoading = false, dismiss = true) }
         }
     }

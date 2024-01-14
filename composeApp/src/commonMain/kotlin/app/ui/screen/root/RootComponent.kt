@@ -38,9 +38,9 @@ class DefaultRootComponent(
                 getDealsUseCase = sharedModule.provideGetGamesUseCase(),
                 getShopsUseCase = sharedModule.provideGetShopsUseCase(),
                 getGameWithDealsUseCase = sharedModule.provideGetGameWithDealsUseCase(),
+                setAlertUseCase = sharedModule.provideSetAlertUseCase(),
                 browserOpener = frameworkModule.provideBrowserOpener(),
             )
         )
     }
-
 }
