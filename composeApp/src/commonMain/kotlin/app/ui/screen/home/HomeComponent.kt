@@ -31,6 +31,7 @@ interface HomeComponent {
     fun getInitialDeals()
     fun getMoreDeals()
     fun openGame(gameID: String)
+    fun changeQuery(query: String)
     fun changeSorting(type: DealSortingType)
 }
 
@@ -78,7 +79,14 @@ class DefaultHomeComponent(
         loadInitialJob?.cancel()
         _state.update { state -> state.copy(isLoadingInitial = true) }
         loadInitialJob = scope.launch {
-            val deals = getDealsUseCase(DealParams(pageNumber = 0, state.value.sortingType))
+            val currentState = state.value
+            val deals = getDealsUseCase(
+                DealParams(
+                    pageNumber = 0,
+                    sortingType = currentState.sortingType,
+                    query = currentState.query,
+                )
+            )
             _state.update { state -> state.copy(deals = deals, isLoadingInitial = false, page = 1) }
         }
         loadInitialJob?.invokeOnCompletion {
@@ -90,8 +98,14 @@ class DefaultHomeComponent(
         if (loadMoreJob != null) return
         _state.update { state -> state.copy(isLoadingMore = true) }
         loadMoreJob = scope.launch {
-            val deals =
-                getDealsUseCase(DealParams(pageNumber = state.value.page, state.value.sortingType))
+            val currentState = state.value
+            val deals = getDealsUseCase(
+                DealParams(
+                    pageNumber = currentState.page,
+                    sortingType = currentState.sortingType,
+                    query = currentState.query,
+                )
+            )
             _state.update { state ->
                 state.copy(
                     deals = state.deals + deals,
@@ -107,6 +121,10 @@ class DefaultHomeComponent(
 
     override fun openGame(gameID: String) {
         gameNavigation.activate(GameConfig(gameID = gameID))
+    }
+
+    override fun changeQuery(query: String) {
+        _state.update { state -> state.copy(query = query) }
     }
 
     override fun changeSorting(type: DealSortingType) {

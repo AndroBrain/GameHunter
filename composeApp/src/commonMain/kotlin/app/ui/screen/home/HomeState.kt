@@ -10,5 +10,6 @@ data class HomeState(
     val isLoadingMore: Boolean = false,
     val page: Int = 0,
     val shops: List<ShopModel> = emptyList(),
+    val query: String = "",
     val sortingType: DealSortingType = DealSortingType.DEAL_RATING,
 )
