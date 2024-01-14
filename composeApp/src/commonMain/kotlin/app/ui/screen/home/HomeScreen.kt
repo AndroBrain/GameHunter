@@ -24,6 +24,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -75,6 +76,7 @@ fun HomeScreen(
                     imeAction = ImeAction.Search,
                 ),
                 singleLine = true,
+                placeholder = { Text(text = Resources.strings.gameNamePlaceholder) }
             )
         },
         modifier = modifier,

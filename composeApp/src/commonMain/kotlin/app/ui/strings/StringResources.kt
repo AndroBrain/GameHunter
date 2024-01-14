@@ -11,6 +11,7 @@ interface StringResources {
 
     val cheapestPriceEver: String
     val getInTheseShops: String
+    val gameNamePlaceholder: String
 
     fun sortingType(sortingType: DealSortingType): String
     val noLimit: String

@@ -17,6 +17,8 @@ class EnStringResources : StringResources {
         get() = " — cheapest price ever"
     override val getInTheseShops: String
         get() = "Get the game in these shops:"
+    override val gameNamePlaceholder: String
+        get() = "Game name example…"
 
     override fun sortingType(sortingType: DealSortingType): String = when (sortingType) {
         DealSortingType.DEAL_RATING -> "Deal rating"
