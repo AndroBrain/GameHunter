@@ -4,13 +4,13 @@
 
 I'm Michal Ankiersztajn, an Applied Computer Science Engineering Student at Warsaw University of Technology. I got interested in Kotlin around 3 years ago and fell in love with it ever since. I've developed Android apps commercially during these 3 years, but recently, I've been more into KMP. I also write articles about Programming (in Kotlin or general good practises) on [Medium](https://medium.com/@michalankiersztajn).
 
-I created **Game Hunter** because games are increasingly expensive nowadays. Oftentimes, we want to play games together, but when they cost more than 30$, the costs of these games are too high for people in Poland. Therefore, I decided to solve this issue!
+I created **Game Hunter** because games are increasingly expensive nowadays. Often, we want to play games together, but when they cost more than 30$, the costs of these games are too high for people in Poland. Therefore, I decided to solve this issue!
 
 The app allows users to browse, search, sort and filter games with great deals. If you want to buy a game that costs too much, you can set up an alert with the upper price limit. Cards present more detailed information like release date, deal rating, steam rating, steam reviews and retail price. You can choose a shop from which you want to buy a game.
 
 The app is aimed at people who want to play together and have fun but don't want to spend all their savings on them. As well as for those who want to save some money.
 
-Amazingly, I could share 100% of UI code with Compose multiplatform and 100% of data altering logic with SQLDelight and Ktor.
+Amazingly, I could share 100% of UI code with Compose multiplatform and 100% of data-altering logic with SQLDelight and Ktor.
 
 ## Presentation
 
@@ -22,7 +22,7 @@ Amazingly, I could share 100% of UI code with Compose multiplatform and 100% of 
 
 https://github.com/AndroBrain/GameHunter/assets/75139757/8cd2b362-6107-457c-821c-1c4bb71a19c4
 
-## How to compile and run the application?
+## How do you compile and run the application?
 
 ### Desktop
 
@@ -34,17 +34,17 @@ Or type it in **Run Anything** in IntelliJ/Android Studio Window.
 
 ### Android
 
-The easiest way to launch the Android client is to run from Android Studio using the generated build configuration `composeApp`. It'll build and deploy it on a selected physical device or emulator. I would strongly suggest using this method because it's the easiest one.
+The easiest way to launch the Android client is to run from Android Studio using the generated build configuration `composeApp`. It'll build and deploy it on a selected physical device or emulator. I suggest using this method because it's the easiest one.
 
 ## Project structure
 
-* `gradle` - containts `libs.versions.toml` file with all the project, libraries and plugins configurations.
+* `gradle` - contains `libs.versions.toml` file with all the project, libraries and plugin configurations.
 * `composeApp` - module containing the app build in compose.
 * `androidMain` - module containing Android specific logic.
 * `desktopMain` - module containing Desktop specific logic.
 * `iosMain` - module containing ios specific logic (the app currently doesn't support iOS).
 * `commonMain`
-    * `kotlin` - module with shared kotlin code
+    * `kotlin` - module with shared Kotlin code
       * `app` - directory with application layer (Compose UI + Presentation).
       * `data` - directory with data layer (Local storage with SQLDelight and Networking with Ktor)
       * `domain` - directory with domain layer. Independent from other layers.
@@ -84,4 +84,11 @@ The easiest way to launch the Android client is to run from Android Studio using
 
 The app currently uses [Cheap Shark API](https://apidocs.cheapshark.com/#a2620d3f-683e-0396-61e7-3fe4d30ea376) to get all the game deals, thumbnails, prices etc.
 
-## 
+## What's next?
+* Implementing more shops such as g2a, eneba etc.
+* Advanced caching system that'll limit the amount of done requests drastically.
+* Minor architecture fixes to leverage Component-based UI architecture.
+* Better architecture for handling responses.
+* iOS support.
+* Release on Google Play & Apple Store.
+* Build a Web page when Compose UI supports it.
