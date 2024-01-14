@@ -57,6 +57,7 @@ fun DealCard(
                 Column(modifier = Modifier.heightIn(min = Resources.dimens.dealImageHeight)) {
                     val currencySign = Resources.strings.currencySign
                     Text(
+                        modifier = Modifier.padding(end = Resources.dimens.viewsSpacingSmall),
                         text = deal.title,
                         minLines = 2,
                         maxLines = 2,
