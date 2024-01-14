@@ -23,4 +23,7 @@ interface StringResources {
     val sendNotification: String
 
     val invalidEmail: String
+
+    val loadingError: String
+    val reload: String
 }

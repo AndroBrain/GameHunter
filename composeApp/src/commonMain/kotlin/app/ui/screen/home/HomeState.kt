@@ -15,4 +15,5 @@ data class HomeState(
     val sortingType: DealSortingType = DealSortingType.DEAL_RATING,
     val maxPrice: Int? = null,
     val onSale: Boolean = false,
+    val isInError: Boolean = false,
 )

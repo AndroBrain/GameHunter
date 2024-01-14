@@ -11,8 +11,8 @@ import domain.deal.game.GameWithDealsModel
 class DefaultDealRepository(
     private val dealDataSource: DealDataSource,
 ) : DealRepository {
-    override suspend fun getDeals(params: DealParams): List<DealModel> =
-        dealDataSource.getDeals(params).toModels()
+    override suspend fun getDeals(params: DealParams): List<DealModel>? =
+        dealDataSource.getDeals(params)?.toModels()
 
     override suspend fun getGameWithDeals(gameID: String): GameWithDealsModel =
         dealDataSource.getGameWithDeals(gameID).toModel()

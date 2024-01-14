@@ -47,4 +47,8 @@ class EnStringResources : StringResources {
         get() = "Set alert"
     override val invalidEmail: String
         get() = "Invalid email"
+    override val loadingError: String
+        get() = "Loading error occurred"
+    override val reload: String
+        get() = "Reload"
 }

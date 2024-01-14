@@ -82,7 +82,7 @@ class DefaultHomeComponent(
 
     override fun getInitialDeals() {
         loadInitialJob?.cancel()
-        _state.update { state -> state.copy(isLoadingInitial = true) }
+        _state.update { state -> state.copy(isLoadingInitial = true, isInError = false) }
         loadInitialJob = scope.launch {
             val currentState = state.value
             val deals = getDealsUseCase(
@@ -94,13 +94,20 @@ class DefaultHomeComponent(
                     onSale = currentState.onSale,
                 )
             )
-            _state.update { state ->
-                state.copy(
-                    deals = deals,
-                    isLoadingInitial = false,
-                    page = 1,
-                    isFinalPage = false,
-                )
+            if (deals == null) {
+                _state.update { state ->
+                    state.copy(isInError = true)
+                }
+            } else {
+                _state.update { state ->
+                    state.copy(
+                        deals = deals,
+                        isLoadingInitial = false,
+                        page = 1,
+                        isFinalPage = false,
+                        isInError = false,
+                    )
+                }
             }
         }
         loadInitialJob?.invokeOnCompletion {
@@ -122,13 +129,15 @@ class DefaultHomeComponent(
                     onSale = currentState.onSale,
                 )
             )
-            _state.update { state ->
-                state.copy(
-                    deals = state.deals + deals,
-                    isLoadingMore = false,
-                    page = state.page + 1,
-                    isFinalPage = deals.isEmpty(),
-                )
+            if (deals != null) {
+                _state.update { state ->
+                    state.copy(
+                        deals = state.deals + deals,
+                        isLoadingMore = false,
+                        page = state.page + 1,
+                        isFinalPage = deals.isEmpty(),
+                    )
+                }
             }
         }
         loadMoreJob?.invokeOnCompletion {
