@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 interface GameComponent {
-    val state: StateFlow<GameData>
+    val state: StateFlow<GameState>
     fun onDismiss()
     fun openInStore(dealID: String)
 }
@@ -29,7 +29,7 @@ class DefaultGameComponent(
     private val shops: Map<String, ShopModel>,
 ) : GameComponent, ComponentContext by context {
 
-    private val _state = MutableStateFlow(GameData())
+    private val _state = MutableStateFlow(GameState())
     override val state = _state.asStateFlow()
 
     private val scope = coroutineScope(SupervisorJob())
