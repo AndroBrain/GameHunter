@@ -1,4 +1,5 @@
 ![ic_launcher-playstore](https://github.com/AndroBrain/GameHunter/assets/75139757/70bb6390-74ea-4fa1-a882-c03160e2b8f5)
+<img src="https://github.com/AndroBrain/GameHunter/assets/75139757/70bb6390-74ea-4fa1-a882-c03160e2b8f5" width="320" height="320">
 
 ## Project description
 
