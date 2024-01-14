@@ -1,9 +1,8 @@
 package app.ui.screen.home.params
 
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,16 +25,20 @@ fun MaxPriceParam(
         expanded = expanded,
         onExpandedChange = { expanded = it }
     ) {
-        OutlinedTextField(
-            modifier = Modifier.menuAnchor().widthIn(min = Resources.dimens.viewsSpacingSmall),
-            value = if (maxPrice == null) {
-                "${Resources.strings.maxPrice}${Resources.strings.noLimit}"
-            } else {
-                "${Resources.strings.maxPrice}${Resources.strings.currencySign}$maxPrice"
+        FilterChip(
+            selected = maxPrice != null,
+            modifier = Modifier.menuAnchor(),
+            onClick = {},
+            label = {
+                DealParamText(
+                    text = if (maxPrice == null) {
+                        "${Resources.strings.maxPrice}${Resources.strings.noLimit}"
+                    } else {
+                        "${Resources.strings.maxPrice}${Resources.strings.currencySign}$maxPrice"
+                    },
+                )
             },
-            onValueChange = {},
-            readOnly = true,
-            singleLine = true,
+            colors = DealParamDefaults.colors(),
         )
         ExposedDropdownMenu(
             expanded = expanded,
