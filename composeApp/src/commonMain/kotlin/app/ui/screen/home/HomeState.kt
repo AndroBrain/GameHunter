@@ -9,6 +9,7 @@ data class HomeState(
     val isLoadingInitial: Boolean = true,
     val isLoadingMore: Boolean = false,
     val page: Int = 0,
+    val isFinalPage: Boolean = false,
     val shops: List<ShopModel> = emptyList(),
     val query: String = "",
     val sortingType: DealSortingType = DealSortingType.DEAL_RATING,

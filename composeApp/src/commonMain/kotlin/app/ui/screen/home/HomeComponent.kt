@@ -87,7 +87,14 @@ class DefaultHomeComponent(
                     query = currentState.query,
                 )
             )
-            _state.update { state -> state.copy(deals = deals, isLoadingInitial = false, page = 1) }
+            _state.update { state ->
+                state.copy(
+                    deals = deals,
+                    isLoadingInitial = false,
+                    page = 1,
+                    isFinalPage = false,
+                )
+            }
         }
         loadInitialJob?.invokeOnCompletion {
             loadInitialJob = null
@@ -95,7 +102,7 @@ class DefaultHomeComponent(
     }
 
     override fun getMoreDeals() {
-        if (loadMoreJob != null) return
+        if (loadMoreJob != null || state.value.isFinalPage) return
         _state.update { state -> state.copy(isLoadingMore = true) }
         loadMoreJob = scope.launch {
             val currentState = state.value
@@ -111,6 +118,7 @@ class DefaultHomeComponent(
                     deals = state.deals + deals,
                     isLoadingMore = false,
                     page = state.page + 1,
+                    isFinalPage = deals.isEmpty(),
                 )
             }
         }
