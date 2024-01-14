@@ -9,7 +9,7 @@ class DesktopFrameworkModule : FrameworkModule {
 
     private val db by lazy {
         GameHunterDatabase(
-            driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY).also { driver ->
+            driver = JdbcSqliteDriver("jdbc:sqlite:gamehunter.db").also { driver ->
                 GameHunterDatabase.Schema.create(driver)
             }
         )

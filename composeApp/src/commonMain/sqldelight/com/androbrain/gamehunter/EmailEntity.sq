@@ -1,4 +1,4 @@
-CREATE TABLE EmailEntity (
+CREATE TABLE IF NOT EXISTS EmailEntity (
     id INTEGER NOT NULL PRIMARY KEY,
     email TEXT NOT NULL
 );
