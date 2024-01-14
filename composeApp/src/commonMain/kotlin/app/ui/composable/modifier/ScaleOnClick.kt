@@ -24,9 +24,11 @@ fun Modifier.scaleOnClick(
 
 fun Modifier.scaleClickable(
     interactionSource: MutableInteractionSource,
+    target: Float = SCALE_DOWN_VALUE,
     indication: Indication?,
     enabled: Boolean = true,
     onClickLabel: String? = null,
     role: Role? = null,
     onClick: () -> Unit,
 ): Modifier = clickable(interactionSource, indication, enabled, onClickLabel, role, onClick)
+    .scaleOnClick(interactionSource = interactionSource, target = target)

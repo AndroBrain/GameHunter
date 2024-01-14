@@ -1,6 +1,7 @@
 package app.ui.screen.home.deal
 
 import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,7 +25,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import app.ui.composable.image.AsyncImage
-import app.ui.composable.modifier.scaleClickable
 import app.ui.composable.modifier.scaleOnClick
 import app.ui.theme.Resources
 import domain.deal.DealModel
@@ -39,7 +39,7 @@ fun DealCard(
     Card(modifier = modifier.scaleOnClick(interactionSource)) {
         Column(
             modifier = Modifier.fillMaxSize()
-                .scaleClickable(
+                .clickable(
                     interactionSource = interactionSource,
                     indication = LocalIndication.current,
                     onClick = onClick,
