@@ -87,7 +87,7 @@ fun DealCard(
                         } else {
                             Text(
                                 text = "${deal.salePrice}$currencySign",
-                                style = MaterialTheme.typography.titleSmall,
+                                style = MaterialTheme.typography.titleLarge,
                             )
                         }
                         Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
