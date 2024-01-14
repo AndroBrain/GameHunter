@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,10 +21,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -63,24 +66,33 @@ fun HomeScreen(
     }
     Scaffold(
         topBar = {
-            OutlinedTextField(
+            Row(
                 modifier = Modifier.fillMaxWidth().padding(Resources.dimens.screenSpacingSmall),
-                value = state.query,
-                onValueChange = component::changeQuery,
-                trailingIcon = {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = null)
-                },
-                shape = CircleShape,
-                keyboardActions = KeyboardActions(
-                    onSearch = { component.getInitialDeals() },
-                ),
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Sentences,
-                    imeAction = ImeAction.Search,
-                ),
-                singleLine = true,
-                placeholder = { Text(text = Resources.strings.gameNamePlaceholder) }
-            )
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                OutlinedTextField(
+                    modifier = Modifier.weight(1F),
+                    value = state.query,
+                    onValueChange = component::changeQuery,
+                    trailingIcon = {
+                        Icon(imageVector = Icons.Default.Search, contentDescription = null)
+                    },
+                    shape = CircleShape,
+                    keyboardActions = KeyboardActions(
+                        onSearch = { component.getInitialDeals() },
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Sentences,
+                        imeAction = ImeAction.Search,
+                    ),
+                    singleLine = true,
+                    placeholder = { Text(text = Resources.strings.gameNamePlaceholder) }
+                )
+                Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
+                IconButton(onClick = component::openAlerts) {
+                    Icon(imageVector = Icons.Default.Notifications, contentDescription = null)
+                }
+            }
         },
         modifier = modifier,
     ) { insets ->

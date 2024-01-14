@@ -13,7 +13,9 @@ import data.repository.alert.DefaultAlertRepository
 import data.repository.deal.DefaultDealRepository
 import data.repository.shop.DefaultShopRepository
 import domain.alert.AlertRepository
+import domain.alert.DeleteAlertUseCase
 import domain.alert.GetAlertEmailUseCase
+import domain.alert.GetAlertsUseCase
 import domain.alert.SetAlertUseCase
 import domain.deal.DealRepository
 import domain.deal.GetDealsUseCase
@@ -38,6 +40,12 @@ class DefaultSharedModule(
 
     override fun provideGetAlertEmailUseCase(): GetAlertEmailUseCase =
         GetAlertEmailUseCase(alertRepository = provideAlertRepository())
+
+    override fun provideGetAlertsUseCase(): GetAlertsUseCase =
+        GetAlertsUseCase(alertRepository = provideAlertRepository())
+
+    override fun provideDeleteAlertUseCase(): DeleteAlertUseCase =
+        DeleteAlertUseCase(alertRepository = provideAlertRepository())
 
     private fun provideDealRepository(): DealRepository =
         DefaultDealRepository(dealDataSource = provideDealDataSource())

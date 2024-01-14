@@ -2,6 +2,7 @@ package app
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import app.ui.screen.alert.AlertScreen
 import app.ui.screen.home.HomeScreen
 import app.ui.screen.root.Child
 import app.ui.screen.root.RootComponent
@@ -23,6 +24,7 @@ fun App(
         ) { child ->
             when (val instance = child.instance) {
                 is Child.ScreenHome -> HomeScreen(component = instance.component)
+                is Child.ScreenAlert -> AlertScreen(component = instance.component)
             }
         }
     }

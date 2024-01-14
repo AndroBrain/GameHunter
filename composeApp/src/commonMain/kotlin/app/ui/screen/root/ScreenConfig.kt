@@ -6,4 +6,7 @@ import kotlinx.serialization.Serializable
 sealed class ScreenConfig {
     @Serializable
     data object Home : ScreenConfig()
+
+    @Serializable
+    data object Alert : ScreenConfig()
 }

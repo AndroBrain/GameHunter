@@ -25,7 +25,6 @@ class SqlDelightLocalAlertDataSource(
         price: String,
     ) {
         alertQueries.insert(
-            id = null,
             email = email,
             gameTitle = gameTitle,
             gameId = gameID,
@@ -33,7 +32,7 @@ class SqlDelightLocalAlertDataSource(
         )
     }
 
-    override suspend fun deleteAlert(id: Long) {
+    override suspend fun deleteAlert(id: String) {
         alertQueries.delete(id)
     }
 

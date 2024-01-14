@@ -32,6 +32,7 @@ interface HomeComponent {
 
     fun getInitialDeals()
     fun getMoreDeals()
+    fun openAlerts()
     fun openGame(gameID: String)
     fun changeQuery(query: String)
     fun changeSorting(type: DealSortingType)
@@ -41,6 +42,7 @@ interface HomeComponent {
 
 class DefaultHomeComponent(
     context: ComponentContext,
+    private val navigateToAlerts: () -> Unit,
     private val getDealsUseCase: GetDealsUseCase,
     private val getShopsUseCase: GetShopsUseCase,
     private val getGameWithDealsUseCase: GetGameWithDealsUseCase,
@@ -146,6 +148,10 @@ class DefaultHomeComponent(
         loadMoreJob?.invokeOnCompletion {
             loadMoreJob = null
         }
+    }
+
+    override fun openAlerts() {
+        navigateToAlerts()
     }
 
     override fun openGame(gameID: String) {

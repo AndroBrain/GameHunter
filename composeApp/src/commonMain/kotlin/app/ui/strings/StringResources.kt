@@ -26,4 +26,6 @@ interface StringResources {
 
     val loadingError: String
     val reload: String
+
+    val alerts: String
 }

@@ -1,18 +1,17 @@
 CREATE TABLE IF NOT EXISTS AlertEntity (
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    gameId TEXT NOT NULL PRIMARY KEY,
     email TEXT NOT NULL,
     gameTitle TEXT NOT NULL,
-    gameId TEXT NOT NULL,
     price TEXT NOT NULL
 );
 
 insert:
-INSERT OR REPLACE INTO AlertEntity(id, email, gameTitle, gameId, price)
-VALUES (?,?,?,?,?);
+INSERT OR REPLACE INTO AlertEntity(email, gameTitle, gameId, price)
+VALUES (?,?,?,?);
 
 delete:
 DELETE FROM AlertEntity
-WHERE id IS :id;
+WHERE gameId IS :id;
 
 get:
 SELECT * FROM AlertEntity;

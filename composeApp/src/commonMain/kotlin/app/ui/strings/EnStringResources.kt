@@ -51,4 +51,7 @@ class EnStringResources : StringResources {
         get() = "Loading error occurred"
     override val reload: String
         get() = "Reload"
+
+    override val alerts: String
+        get() = "Your alerts"
 }
