@@ -39,6 +39,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import app.ui.composable.modifier.scaleOnClick
@@ -73,6 +74,7 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxWidth().padding(Resources.dimens.screenSpacingSmall),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+                val keyboard = LocalSoftwareKeyboardController.current
                 OutlinedTextField(
                     modifier = Modifier.weight(1F),
                     value = state.query,
@@ -82,7 +84,10 @@ fun HomeScreen(
                     },
                     shape = CircleShape,
                     keyboardActions = KeyboardActions(
-                        onSearch = { component.getInitialDeals() },
+                        onSearch = {
+                            keyboard?.hide()
+                            component.getInitialDeals()
+                        },
                     ),
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Sentences,
