@@ -37,13 +37,13 @@ fun AlertCard(
             Text(
                 modifier = Modifier.weight(0.55F),
                 text = alert.gameTitle,
-                style = MaterialTheme.typography.titleSmall
+                style = MaterialTheme.typography.titleMedium,
             )
             Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
             Text(
                 modifier = Modifier.weight(0.3F),
                 text = alert.email,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
             )
             Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
             Text(
