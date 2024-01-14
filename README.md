@@ -1,3 +1,10 @@
+
+## Presentation
+
+### Desktop
+
+![Desktop presentation](/desktop_preview.mp4)
+
 ## How to compile and run the application?
 
 ### Desktop
