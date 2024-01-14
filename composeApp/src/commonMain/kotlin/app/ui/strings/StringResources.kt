@@ -12,6 +12,5 @@ interface StringResources {
     val cheapestPriceEver: String
     val getInTheseShops: String
 
-    val sortedBy: String
     fun sortingType(sortingType: DealSortingType): String
 }
