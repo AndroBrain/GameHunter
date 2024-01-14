@@ -61,7 +61,7 @@ fun NotificationDialog(
                     )
                     Spacer(modifier = Modifier.height(Resources.dimens.viewsSpacingSmall))
                     OutlinedTextField(
-                        value = state.price.toString(),
+                        value = "${state.price}${Resources.strings.currencySign}",
                         onValueChange = component::changePrice,
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Decimal,
