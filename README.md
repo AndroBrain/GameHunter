@@ -91,4 +91,4 @@ The app currently uses [Cheap Shark API](https://apidocs.cheapshark.com/#a2620d3
 * Better architecture for handling responses.
 * iOS support.
 * Release on Google Play & Apple Store.
-* Build a Web page when Compose UI supports it.
+* Build a Web page when Compose UI leaves Experiment phase.
