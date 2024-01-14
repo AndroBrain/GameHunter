@@ -1,13 +1,13 @@
 
 ## Presentation
 
+### Android
+
+[android_preview.webm](https://github.com/AndroBrain/GameHunter/assets/75139757/9d9dea01-a993-4cc4-93cf-ad64e8298c7c)
+
 ### Desktop
 
 https://github.com/AndroBrain/GameHunter/assets/75139757/8cd2b362-6107-457c-821c-1c4bb71a19c4
-
-### Android
-
-![android_preview](https://github.com/AndroBrain/GameHunter/assets/75139757/af2227da-7ec1-4a54-ac2c-8d6e38bdbbeb)
 
 ## How to compile and run the application?
 
