@@ -11,7 +11,14 @@ class DefaultAlertRepository(
 ) : AlertRepository {
     override suspend fun setAlert(params: SetAlertParams) {
         localDataSource.insertEmail(params.email)
-        remoteDataSource.setAlert(params)
+        if (remoteDataSource.setAlert(params)) {
+            localDataSource.insertAlert(
+                email = params.email,
+                gameTitle = params.gameTitle,
+                gameID = params.gameID,
+                price = params.price.toString(),
+            )
+        }
     }
 
     override suspend fun getEmail(): String? = localDataSource.getEmail()

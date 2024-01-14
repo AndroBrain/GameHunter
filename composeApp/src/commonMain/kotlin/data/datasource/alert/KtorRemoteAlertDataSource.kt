@@ -4,6 +4,8 @@ import data.api.HOST_URL
 import data.api.useClient
 import domain.alert.SetAlertParams
 import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
+import kotlinx.serialization.json.Json
 
 private const val ALERT_PATH = "alerts"
 private const val ACTION_PARAM = "action"
@@ -14,8 +16,8 @@ private const val PRICE_PARAM = "price"
 private const val ACTION_SET = "set"
 
 class KtorRemoteAlertDataSource : RemoteAlertDataSource {
-    override suspend fun setAlert(params: SetAlertParams) {
-        useClient { client ->
+    override suspend fun setAlert(params: SetAlertParams): Boolean {
+        val response = useClient { client ->
             client.get("$HOST_URL/$ALERT_PATH") {
                 url {
                     parameters.append(ACTION_PARAM, ACTION_SET)
@@ -25,6 +27,6 @@ class KtorRemoteAlertDataSource : RemoteAlertDataSource {
                 }
             }
         }
-        // TODO handle whether response is a success or failure
+        return Json.decodeFromString<Boolean>(response.bodyAsText())
     }
 }

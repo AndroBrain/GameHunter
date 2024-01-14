@@ -65,7 +65,10 @@ class DefaultNotificationComponent(
             val currentState = state.value
             setAlertUseCase(
                 SetAlertParams(
-                    email = currentState.email, gameID = gameID, price = currentState.price,
+                    email = currentState.email,
+                    gameID = gameID,
+                    gameTitle = currentState.gameTitle,
+                    price = currentState.price,
                 )
             )
             _state.update { state -> state.copy(isLoading = false, dismiss = true) }
