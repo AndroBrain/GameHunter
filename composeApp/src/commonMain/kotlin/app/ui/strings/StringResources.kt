@@ -13,4 +13,6 @@ interface StringResources {
     val getInTheseShops: String
 
     fun sortingType(sortingType: DealSortingType): String
+    val noLimit: String
+    val maxPrice: String
 }

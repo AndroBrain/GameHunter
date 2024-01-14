@@ -33,6 +33,7 @@ interface HomeComponent {
     fun openGame(gameID: String)
     fun changeQuery(query: String)
     fun changeSorting(type: DealSortingType)
+    fun changeMaxPrice(maxPrice: Int?)
 }
 
 class DefaultHomeComponent(
@@ -85,6 +86,7 @@ class DefaultHomeComponent(
                     pageNumber = 0,
                     sortingType = currentState.sortingType,
                     query = currentState.query,
+                    maxPrice = currentState.maxPrice,
                 )
             )
             _state.update { state ->
@@ -111,6 +113,7 @@ class DefaultHomeComponent(
                     pageNumber = currentState.page,
                     sortingType = currentState.sortingType,
                     query = currentState.query,
+                    maxPrice = currentState.maxPrice,
                 )
             )
             _state.update { state ->
@@ -137,10 +140,16 @@ class DefaultHomeComponent(
 
     override fun changeSorting(type: DealSortingType) {
         val previousSortingType = state.value.sortingType
-        _state.update { state ->
-            state.copy(sortingType = type)
-        }
+        _state.update { state -> state.copy(sortingType = type) }
         if (previousSortingType != type) {
+            getInitialDeals()
+        }
+    }
+
+    override fun changeMaxPrice(maxPrice: Int?) {
+        val previousPrice = state.value.maxPrice
+        _state.update { state -> state.copy(maxPrice = maxPrice) }
+        if (previousPrice != maxPrice) {
             getInitialDeals()
         }
     }

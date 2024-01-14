@@ -27,4 +27,10 @@ class EnStringResources : StringResources {
         DealSortingType.RELEASE -> "Release"
         DealSortingType.RECENT -> "Recent"
     }
+
+    override val noLimit: String
+        get() = "No limit"
+
+    override val maxPrice: String
+        get() = "Max price: "
 }

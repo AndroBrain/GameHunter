@@ -14,6 +14,7 @@ private const val DEALS_PATH = "deals"
 private const val PAGE_NUMBER_PARAM = "pageNumber"
 private const val SORTING_PARAM = "sortBy"
 private const val QUERY_PARAM = "title"
+private const val MAX_PRICE_PARAM = "upperPrice"
 
 private const val GAMES_PATH = "games"
 private const val GAME_ID_PARAM = "id"
@@ -27,6 +28,9 @@ class KtorDealDataSource : DealDataSource {
                     parameters.append(SORTING_PARAM, params.sortingType.toParam())
                     if (params.query.isNotBlank()) {
                         parameters.append(QUERY_PARAM, params.query)
+                    }
+                    if (params.maxPrice != null) {
+                        parameters.append(MAX_PRICE_PARAM, params.maxPrice.toString())
                     }
                 }
             }

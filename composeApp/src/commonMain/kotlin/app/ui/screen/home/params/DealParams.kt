@@ -33,7 +33,7 @@ fun DealParams(
         item {
             Icon(imageVector = SortIcon, contentDescription = null)
             Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
-            SortingParam(type = state.sortingType, onChangeType = { component.changeSorting(it) })
+            SortingParam(type = state.sortingType, onChangeType = component::changeSorting)
             Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
             Box(
                 modifier = Modifier.height(Resources.dimens.searchDividerHeight)
@@ -43,7 +43,7 @@ fun DealParams(
             Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
             Icon(imageVector = Filtericon, contentDescription = null)
             Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
+            MaxPriceParam(maxPrice = state.maxPrice, onMaxPriceChanged = component::changeMaxPrice)
         }
-
     }
 }

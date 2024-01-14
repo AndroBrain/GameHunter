@@ -13,4 +13,5 @@ data class HomeState(
     val shops: List<ShopModel> = emptyList(),
     val query: String = "",
     val sortingType: DealSortingType = DealSortingType.DEAL_RATING,
+    val maxPrice: Int? = null,
 )
