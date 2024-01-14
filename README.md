@@ -6,11 +6,11 @@ I'm Michal Ankiersztajn, an Applied Computer Science Engineering Student at Wars
 
 I created **Game Hunter** because games are increasingly expensive nowadays. Oftentimes, we want to play games together, but when they cost more than 30$, the costs of these games are too high for people in Poland. Therefore, I decided to solve this issue!
 
-The app allows users to browse, search, sort and filter games with great deals. If you want to buy a game that costs too much, you can set up an alert with the upper price limit. Cards present more detailed information like release date, deal rating, steam rating, steam reviews and retail price. You're able to choose a shop from which you want to buy a game.
+The app allows users to browse, search, sort and filter games with great deals. If you want to buy a game that costs too much, you can set up an alert with the upper price limit. Cards present more detailed information like release date, deal rating, steam rating, steam reviews and retail price. You can choose a shop from which you want to buy a game.
 
 The app is aimed at people who want to play together and have fun but don't want to spend all their savings on them. As well as for those who simply want to save some money.
 
-Amazingly I was able to share 100% UI code with Compose multiplatform and 100% of data altering logic with SQLDelight and Ktor.
+Amazingly, I could share 100% of UI code with Compose multiplatform and 100% of data altering logic with SQLDelight and Ktor.
 
 ## Presentation
 
