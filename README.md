@@ -2,13 +2,13 @@
 
 ## Project description
 
-I'm Michal Ankiersztajn, an Applied Computer Science Engineering Student at Warsaw University of Technology. 
+I'm Michal Ankiersztajn, an Applied Computer Science Engineering Student at Warsaw University of Technology. I got interested in Kotlin around 3 years ago and fell in love with it ever since. I've developed Android apps commercially during these 3 years, but recently, I've been more into KMP. I also write articles about Programming (in Kotlin or general good practises) on [Medium](https://medium.com/@michalankiersztajn).
 
 I created **Game Hunter** because games are increasingly expensive nowadays. Oftentimes, we want to play games together, but when they cost more than 30$, the costs of these games are too high for people in Poland. Therefore, I decided to solve this issue!
 
 The app allows users to browse, search, sort and filter games with great deals. If you want to buy a game that costs too much, you can set up an alert with the upper price limit. Cards present more detailed information like release date, deal rating, steam rating, steam reviews and retail price. You can choose a shop from which you want to buy a game.
 
-The app is aimed at people who want to play together and have fun but don't want to spend all their savings on them. As well as for those who simply want to save some money.
+The app is aimed at people who want to play together and have fun but don't want to spend all their savings on them. As well as for those who want to save some money.
 
 Amazingly, I could share 100% of UI code with Compose multiplatform and 100% of data altering logic with SQLDelight and Ktor.
 
