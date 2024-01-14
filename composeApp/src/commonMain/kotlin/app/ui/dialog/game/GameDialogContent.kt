@@ -1,5 +1,6 @@
 package app.ui.dialog.game
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,12 +20,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import app.ui.composable.image.AsyncImage
+import app.ui.composable.modifier.scaleOnClick
 import app.ui.dialog.game.model.GameWithDealsDisplayable
 import app.ui.theme.Resources
 
@@ -73,7 +76,12 @@ fun GameDialogContent(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(onClick = setupAlert) {
+            val notificationInteractionSource = remember { MutableInteractionSource() }
+            IconButton(
+                modifier = Modifier.scaleOnClick(notificationInteractionSource),
+                interactionSource = notificationInteractionSource,
+                onClick = setupAlert,
+            ) {
                 Icon(imageVector = Icons.Default.Notifications, contentDescription = null)
             }
             Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
