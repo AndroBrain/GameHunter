@@ -3,7 +3,7 @@
 
 ### Desktop
 
-![Desktop presentation](/desktop_preview.mp4)
+![Desktop presentation](https://github.com/AndroBrain/GameHunter/blob/master/desktop_preview.mp4)
 
 ## How to compile and run the application?
 
