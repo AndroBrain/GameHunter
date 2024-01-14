@@ -15,6 +15,7 @@ private const val PAGE_NUMBER_PARAM = "pageNumber"
 private const val SORTING_PARAM = "sortBy"
 private const val QUERY_PARAM = "title"
 private const val MAX_PRICE_PARAM = "upperPrice"
+private const val ON_SALE_PARAM = "onSale"
 
 private const val GAMES_PATH = "games"
 private const val GAME_ID_PARAM = "id"
@@ -31,6 +32,9 @@ class KtorDealDataSource : DealDataSource {
                     }
                     if (params.maxPrice != null) {
                         parameters.append(MAX_PRICE_PARAM, params.maxPrice.toString())
+                    }
+                    if (params.onSale) {
+                        parameters.append(ON_SALE_PARAM, params.onSale.toParam())
                     }
                 }
             }

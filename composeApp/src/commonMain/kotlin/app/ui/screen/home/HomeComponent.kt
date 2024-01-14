@@ -34,6 +34,7 @@ interface HomeComponent {
     fun changeQuery(query: String)
     fun changeSorting(type: DealSortingType)
     fun changeMaxPrice(maxPrice: Int?)
+    fun changeOnSale()
 }
 
 class DefaultHomeComponent(
@@ -87,6 +88,7 @@ class DefaultHomeComponent(
                     sortingType = currentState.sortingType,
                     query = currentState.query,
                     maxPrice = currentState.maxPrice,
+                    onSale = currentState.onSale,
                 )
             )
             _state.update { state ->
@@ -114,6 +116,7 @@ class DefaultHomeComponent(
                     sortingType = currentState.sortingType,
                     query = currentState.query,
                     maxPrice = currentState.maxPrice,
+                    onSale = currentState.onSale,
                 )
             )
             _state.update { state ->
@@ -152,6 +155,11 @@ class DefaultHomeComponent(
         if (previousPrice != maxPrice) {
             getInitialDeals()
         }
+    }
+
+    override fun changeOnSale() {
+        _state.update { state -> state.copy(onSale = !state.onSale) }
+        getInitialDeals()
     }
 
     private data class GameConfig(

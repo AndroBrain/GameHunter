@@ -5,4 +5,5 @@ data class DealParams(
     val sortingType: DealSortingType,
     val query: String,
     val maxPrice: Int?,
+    val onSale: Boolean,
 )

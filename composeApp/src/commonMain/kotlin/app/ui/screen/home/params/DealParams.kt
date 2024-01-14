@@ -44,6 +44,8 @@ fun DealParams(
             Icon(imageVector = Filtericon, contentDescription = null)
             Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
             MaxPriceParam(maxPrice = state.maxPrice, onMaxPriceChanged = component::changeMaxPrice)
+            Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
+            OnSaleParam(onSale = state.onSale, onClick = component::changeOnSale)
         }
     }
 }
