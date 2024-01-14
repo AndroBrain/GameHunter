@@ -10,32 +10,31 @@ import androidx.compose.ui.graphics.vector.ImageVector.Builder
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val SortIcon: ImageVector
+val Filtericon: ImageVector
     get() {
-        if (_sortIcon != null) {
-            return _sortIcon!!
+        if (_filtericon != null) {
+            return _filtericon!!
         }
-        _sortIcon = Builder(
-            name = "SortIcon", defaultWidth =
-            24.0.dp, defaultHeight = 24.0.dp, viewportWidth = 960.0f, viewportHeight =
-            960.0f
+        _filtericon = Builder(
+            name = "Filtericon", defaultWidth = 24.0.dp, defaultHeight = 24.0.dp,
+            viewportWidth = 960.0f, viewportHeight = 960.0f
         ).apply {
             path(
                 fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
                 strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
-                moveTo(120.0f, 720.0f)
+                moveTo(400.0f, 720.0f)
                 verticalLineToRelative(-80.0f)
-                horizontalLineToRelative(240.0f)
+                horizontalLineToRelative(160.0f)
                 verticalLineToRelative(80.0f)
-                lineTo(120.0f, 720.0f)
+                lineTo(400.0f, 720.0f)
                 close()
-                moveTo(120.0f, 520.0f)
+                moveTo(240.0f, 520.0f)
                 verticalLineToRelative(-80.0f)
                 horizontalLineToRelative(480.0f)
                 verticalLineToRelative(80.0f)
-                lineTo(120.0f, 520.0f)
+                lineTo(240.0f, 520.0f)
                 close()
                 moveTo(120.0f, 320.0f)
                 verticalLineToRelative(-80.0f)
@@ -46,7 +45,7 @@ val SortIcon: ImageVector
             }
         }
             .build()
-        return _sortIcon!!
+        return _filtericon!!
     }
 
-private var _sortIcon: ImageVector? = null
+private var _filtericon: ImageVector? = null

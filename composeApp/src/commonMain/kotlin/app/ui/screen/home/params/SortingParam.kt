@@ -16,7 +16,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import app.ui.theme.Resources
-import app.ui.theme.icons.SortIcon
 import domain.deal.DealSortingType
 
 @Composable
@@ -37,9 +36,6 @@ fun SortingParam(
             trailingIcon = {
                 Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = null)
             },
-            leadingIcon = {
-                Icon(imageVector = SortIcon, contentDescription = null)
-            }
         )
 
         ExposedDropdownMenu(
