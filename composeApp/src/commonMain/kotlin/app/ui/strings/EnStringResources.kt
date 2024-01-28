@@ -9,10 +9,8 @@ class EnStringResources : StringResources {
         get() = "$"
     override val steamReviews: String
         get() = "steam reviews"
-    override val dealRating: String
-        get() = "Deal rating: "
     override val steamRating: String
-        get() = " | Steam rating: "
+        get() = " | Steam: "
     override val cheapestPriceEver: String
         get() = " — cheapest price ever"
     override val getInTheseShops: String

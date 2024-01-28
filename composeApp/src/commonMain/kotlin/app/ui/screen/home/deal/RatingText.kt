@@ -15,29 +15,14 @@ import domain.deal.DealModel
 private const val MIN_POSITIVE_PERCENT = 70
 private const val MIN_MEDIUM_PERCENT = 40
 
-private const val MIN_POSITIVE_RATING = 7
-private const val MIN_MEDIUM_RATING = 4
-
 @Composable
 fun RatingText(modifier: Modifier = Modifier, deal: DealModel) {
     val ratingText =
         deal.steamRatingText ?: (deal.steamRatingPercent.toString() + "%")
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingExtraSmall))
+        DealRating(deal = deal)
         val style = MaterialTheme.typography.bodyMedium
-        Text(
-            text = Resources.strings.dealRating,
-            style = style,
-        )
-        Text(
-            text = deal.dealRating,
-            style = MaterialTheme.typography.titleMedium,
-            color = when {
-                deal.dealRating.toFloat() > MIN_POSITIVE_RATING -> MaterialTheme.colorScheme.tertiary
-                deal.dealRating.toFloat() > MIN_MEDIUM_RATING -> MaterialTheme.colorScheme.secondary
-                else -> MaterialTheme.colorScheme.error
-            }
-        )
         if (deal.steamRatingCount > 0) {
             Text(
                 text = Resources.strings.steamRating,
@@ -54,7 +39,7 @@ fun RatingText(modifier: Modifier = Modifier, deal: DealModel) {
                 }
             )
             Text(
-                text = ", ${deal.steamRatingCount}",
+                text = " (${deal.steamRatingCount})",
                 style = style,
                 minLines = 1,
                 maxLines = 1,
