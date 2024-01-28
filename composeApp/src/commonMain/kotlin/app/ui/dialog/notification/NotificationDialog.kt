@@ -80,7 +80,7 @@ fun NotificationDialog(
                     enabled = state.isEmailValid,
                     onClick = component::setAlert,
                 ) {
-                    Text(text = Resources.strings.sendNotification)
+                    Text(text = Resources.strings.addNotification)
                 }
             }
         },

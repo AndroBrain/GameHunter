@@ -1,7 +1,6 @@
 package app.ui.dialog.game
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,10 +12,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material3.AssistChip
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import app.ui.composable.image.AsyncImage
 import app.ui.composable.modifier.scaleOnClick
 import app.ui.dialog.game.model.GameWithDealsDisplayable
@@ -71,26 +69,29 @@ fun GameDialogContent(
             }
         }
         Spacer(modifier = Modifier.height(Resources.dimens.viewsSpacingSmall))
-        Row(
+        val notificationInteractionSource = remember { MutableInteractionSource() }
+        AssistChip(
+            modifier = Modifier
+                .align(Alignment.Start)
+                .scaleOnClick(notificationInteractionSource),
+            onClick = setupAlert,
+            label = {
+                Text(text = Resources.strings.addNotification)
+            },
+            leadingIcon = {
+                Icon(
+                    modifier = Modifier.size(Resources.dimens.buttonIconSize),
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = null,
+                )
+            },
+            interactionSource = notificationInteractionSource,
+        )
+        Text(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            val notificationInteractionSource = remember { MutableInteractionSource() }
-            IconButton(
-                modifier = Modifier.scaleOnClick(notificationInteractionSource),
-                interactionSource = notificationInteractionSource,
-                onClick = setupAlert,
-            ) {
-                Icon(imageVector = Icons.Default.Notifications, contentDescription = null)
-            }
-            Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
-            Text(
-                text = Resources.strings.getInTheseShops,
-                style = MaterialTheme.typography.titleMedium,
-                textAlign = TextAlign.Center,
-            )
-        }
+            text = Resources.strings.getInTheseShops,
+            style = MaterialTheme.typography.titleMedium,
+        )
         Spacer(modifier = Modifier.height(Resources.dimens.viewsSpacingSmall))
         val shopItemModifier = Modifier.fillMaxWidth()
         LazyColumn {

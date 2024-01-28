@@ -20,7 +20,7 @@ interface StringResources {
 
     val notificationEmail: String
     val notificationMaxPrice: String
-    val sendNotification: String
+    val addNotification: String
 
     val invalidEmail: String
 

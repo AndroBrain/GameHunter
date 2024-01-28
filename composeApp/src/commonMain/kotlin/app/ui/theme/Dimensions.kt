@@ -26,4 +26,6 @@ data class Dimensions(
     val shopIconSize: Dp = 36.dp,
 
     val searchDividerHeight: Dp = 40.dp,
+
+    val buttonIconSize: Dp = 18.dp,
 )

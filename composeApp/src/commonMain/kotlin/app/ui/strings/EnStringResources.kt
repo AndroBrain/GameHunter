@@ -43,8 +43,8 @@ class EnStringResources : StringResources {
         get() = "Email"
     override val notificationMaxPrice: String
         get() = "Price limit"
-    override val sendNotification: String
-        get() = "Set alert"
+    override val addNotification: String
+        get() = "Add price alert"
     override val invalidEmail: String
         get() = "Invalid email"
     override val loadingError: String
