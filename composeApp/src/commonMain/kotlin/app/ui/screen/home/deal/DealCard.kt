@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -68,23 +69,33 @@ fun DealCard(
                         deal.releaseDate?.let { date ->
                             Text(
                                 text = date,
-                                style = MaterialTheme.typography.bodyLarge
+                                style = MaterialTheme.typography.bodyMedium,
                             )
                         }
                         Spacer(modifier = Modifier.weight(1F))
                         if (deal.isOnSale) {
                             Text(
-                                text = "${deal.salePrice}$currencySign",
+                                text = "-${deal.savings}%",
                                 color = MaterialTheme.colorScheme.tertiary,
-                                style = MaterialTheme.typography.titleLarge,
+                                style = MaterialTheme.typography.headlineMedium,
                             )
                             Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingExtraSmall))
-                            Text(
-                                modifier = modifier.align(Alignment.Top),
-                                text = "${deal.normalPrice}$currencySign",
-                                style = MaterialTheme.typography.titleSmall.copy(textDecoration = TextDecoration.LineThrough),
-                                overflow = TextOverflow.Ellipsis,
-                            )
+                            Column(horizontalAlignment = Alignment.End) {
+                                Text(
+                                    modifier = Modifier.alpha(0.8F),
+                                    text = "${deal.normalPrice}$currencySign",
+                                    style = MaterialTheme.typography.titleSmall.copy(textDecoration = TextDecoration.LineThrough),
+                                    overflow = TextOverflow.Ellipsis,
+                                    maxLines = 1,
+                                )
+                                Text(
+                                    text = "${deal.salePrice}$currencySign",
+                                    color = MaterialTheme.colorScheme.tertiary,
+                                    style = MaterialTheme.typography.titleSmall,
+                                    overflow = TextOverflow.Ellipsis,
+                                    maxLines = 1,
+                                )
+                            }
                         } else {
                             Text(
                                 text = "${deal.salePrice}$currencySign",
