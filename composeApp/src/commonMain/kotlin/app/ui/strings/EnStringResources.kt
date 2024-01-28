@@ -39,6 +39,9 @@ class EnStringResources : StringResources {
     override val onSaleOnly: String
         get() = "On sale only"
 
+    override val noGamesUnderFilter: String
+        get() = "There are no games under this filter"
+
     override val notificationEmail: String
         get() = "Email"
     override val notificationMaxPrice: String

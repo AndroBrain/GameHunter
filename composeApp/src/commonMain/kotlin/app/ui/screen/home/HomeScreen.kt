@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -24,6 +25,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -42,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextAlign
 import app.ui.composable.modifier.scaleOnClick
 import app.ui.dialog.game.GameDialog
 import app.ui.screen.home.deal.DealCard
@@ -142,31 +145,55 @@ fun HomeScreen(
                         CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                     }
                 } else {
-                    LazyVerticalGrid(
-                        state = gridState,
-                        modifier = Modifier.fillMaxSize(),
-                        columns = GridCells.Adaptive(minSize = Resources.dimens.dealMinSize),
-                        contentPadding = PaddingValues(
-                            start = Resources.dimens.screenSpacingSmall,
-                            top = Resources.dimens.screenSpacingSmall,
-                            end = Resources.dimens.screenSpacingSmall,
-                            bottom = Resources.dimens.screenSpacingMedium,
-                        ),
-                        horizontalArrangement = Arrangement.spacedBy(Resources.dimens.viewsSpacingSmall)
-                    ) {
-                        items(state.deals) { deal ->
-                            DealCard(
-                                modifier = dealModifier,
-                                deal = deal,
-                                onClick = {
-                                    component.openGame(deal.gameID)
-                                },
+                    if (state.deals.isEmpty()) {
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            Icon(
+                                modifier = Modifier.size(Resources.dimens.noDealsIconSize),
+                                imageVector = Icons.Default.ShoppingCart,
+                                contentDescription = null,
+                            )
+                            Spacer(modifier = Modifier.height(Resources.dimens.viewsSpacingSmall))
+                            Text(
+                                text = Resources.strings.noGamesUnderFilter,
+                                style = MaterialTheme.typography.titleMedium,
+                                textAlign = TextAlign.Center,
                             )
                         }
-                        if (state.isLoadingMore) {
-                            item(span = { GridItemSpan(maxLineSpan) }) {
-                                Box(modifier = Modifier.fillMaxSize()) {
-                                    CircularProgressIndicator(modifier = Modifier.align(Alignment.TopCenter))
+                    } else {
+                        LazyVerticalGrid(
+                            state = gridState,
+                            modifier = Modifier.fillMaxSize(),
+                            columns = GridCells.Adaptive(minSize = Resources.dimens.dealMinSize),
+                            contentPadding = PaddingValues(
+                                start = Resources.dimens.screenSpacingSmall,
+                                top = Resources.dimens.screenSpacingSmall,
+                                end = Resources.dimens.screenSpacingSmall,
+                                bottom = Resources.dimens.screenSpacingMedium,
+                            ),
+                            horizontalArrangement = Arrangement.spacedBy(Resources.dimens.viewsSpacingSmall)
+                        ) {
+                            items(state.deals) { deal ->
+                                DealCard(
+                                    modifier = dealModifier,
+                                    deal = deal,
+                                    onClick = {
+                                        component.openGame(deal.gameID)
+                                    },
+                                )
+                            }
+                            if (state.isLoadingMore) {
+                                item(span = { GridItemSpan(maxLineSpan) }) {
+                                    Box(modifier = Modifier.fillMaxSize()) {
+                                        CircularProgressIndicator(
+                                            modifier = Modifier.align(
+                                                Alignment.TopCenter
+                                            )
+                                        )
+                                    }
                                 }
                             }
                         }

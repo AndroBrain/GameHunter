@@ -19,6 +19,8 @@ data class Dimensions(
     val dialogHeight: Dp = 420.dp,
     val dialogWidth: Dp = 400.dp,
 
+    val noDealsIconSize: Dp = 150.dp,
+
     val dealMinSize: Dp = 320.dp,
     val dealImageWidth: Dp = 84.dp,
     val dealImageHeight: Dp = 84.dp,

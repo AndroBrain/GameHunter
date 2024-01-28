@@ -18,6 +18,8 @@ interface StringResources {
     val maxPrice: String
     val onSaleOnly: String
 
+    val noGamesUnderFilter: String
+
     val notificationEmail: String
     val notificationMaxPrice: String
     val addNotification: String
