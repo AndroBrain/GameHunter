@@ -46,5 +46,22 @@ fun RatingText(modifier: Modifier = Modifier, deal: DealModel) {
                 overflow = TextOverflow.Ellipsis,
             )
         }
+        val metaScore = deal.metacriticScore.toIntOrNull()
+        if (metaScore != null && metaScore > 0) {
+            Text(
+                text = Resources.strings.metacriticRating,
+                style = style,
+            )
+            Text(
+                modifier = modifier,
+                text = deal.metacriticScore,
+                style = style,
+                color = when {
+                    metaScore > MIN_POSITIVE_PERCENT -> MaterialTheme.colorScheme.tertiary
+                    metaScore > MIN_MEDIUM_PERCENT -> MaterialTheme.colorScheme.secondary
+                    else -> MaterialTheme.colorScheme.error
+                }
+            )
+        }
     }
 }

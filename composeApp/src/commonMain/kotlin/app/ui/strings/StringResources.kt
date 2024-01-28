@@ -8,6 +8,8 @@ interface StringResources {
     val steamReviews: String
     val steamRating: String
 
+    val metacriticRating: String
+
     val cheapestPriceEver: String
     val getInTheseShops: String
     val gameNamePlaceholder: String

@@ -11,6 +11,10 @@ class EnStringResources : StringResources {
         get() = "steam reviews"
     override val steamRating: String
         get() = " | Steam: "
+
+    override val metacriticRating: String
+        get() = " | Metacritic: "
+
     override val cheapestPriceEver: String
         get() = " — cheapest price ever"
     override val getInTheseShops: String
