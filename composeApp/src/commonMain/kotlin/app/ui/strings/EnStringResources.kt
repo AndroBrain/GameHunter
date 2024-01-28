@@ -36,8 +36,8 @@ class EnStringResources : StringResources {
     override val maxPrice: String
         get() = "Price limit: "
 
-    override fun onSaleOnly(onSale: Boolean): String =
-        "On sale only ${if (onSale) "✔️" else "❌"}"
+    override val onSaleOnly: String
+        get() = "On sale only"
 
     override val notificationEmail: String
         get() = "Email"

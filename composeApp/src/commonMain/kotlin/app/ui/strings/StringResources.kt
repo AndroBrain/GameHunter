@@ -16,7 +16,7 @@ interface StringResources {
     fun sortingType(sortingType: DealSortingType): String
     val noLimit: String
     val maxPrice: String
-    fun onSaleOnly(onSale: Boolean): String
+    val onSaleOnly: String
 
     val notificationEmail: String
     val notificationMaxPrice: String
