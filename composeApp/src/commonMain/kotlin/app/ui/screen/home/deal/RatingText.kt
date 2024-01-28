@@ -46,7 +46,13 @@ fun RatingText(modifier: Modifier = Modifier, deal: DealModel) {
                 }
             )
             Text(
-                text = " (${deal.steamRatingCount})",
+                text = " (${
+                    if (deal.steamRatingCount > 1000) {
+                        "${deal.steamRatingCount / 1000}k"
+                    } else {
+                        deal.steamRatingCount
+                    }
+                })",
                 style = style,
                 minLines = 1,
                 maxLines = 1,
