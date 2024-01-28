@@ -1,7 +1,9 @@
 package app.ui.screen.home.deal
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -11,10 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import app.ui.theme.Resources
 import domain.deal.DealModel
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 private const val MIN_POSITIVE_PERCENT = 70
 private const val MIN_MEDIUM_PERCENT = 40
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun RatingText(modifier: Modifier = Modifier, deal: DealModel) {
     val ratingText =
@@ -24,13 +29,15 @@ fun RatingText(modifier: Modifier = Modifier, deal: DealModel) {
         DealRating(deal = deal)
         val style = MaterialTheme.typography.bodyMedium
         if (deal.steamRatingCount > 0) {
-            Text(
-                text = Resources.strings.steamRating,
-                style = style,
+            Text(text = " | ", style = style)
+            Image(
+                modifier = Modifier.size(Resources.dimens.dealIconSize),
+                painter = painterResource("steam_icon.xml"),
+                contentDescription = null,
             )
             Text(
                 modifier = modifier,
-                text = ratingText,
+                text = " $ratingText",
                 style = style,
                 color = when {
                     deal.steamRatingPercent > MIN_POSITIVE_PERCENT -> MaterialTheme.colorScheme.tertiary
@@ -48,13 +55,15 @@ fun RatingText(modifier: Modifier = Modifier, deal: DealModel) {
         }
         val metaScore = deal.metacriticScore.toIntOrNull()
         if (metaScore != null && metaScore > 0) {
-            Text(
-                text = Resources.strings.metacriticRating,
-                style = style,
+            Text(text = " | ", style = style)
+            Image(
+                modifier = Modifier.size(Resources.dimens.dealIconSize),
+                painter = painterResource("metacritic_icon.xml"),
+                contentDescription = null,
             )
             Text(
                 modifier = modifier,
-                text = deal.metacriticScore,
+                text = " ${deal.metacriticScore}",
                 style = style,
                 color = when {
                     metaScore > MIN_POSITIVE_PERCENT -> MaterialTheme.colorScheme.tertiary
