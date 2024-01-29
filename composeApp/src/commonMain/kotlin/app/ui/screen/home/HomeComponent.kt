@@ -13,16 +13,21 @@ import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
 import domain.alert.GetAlertEmailUseCase
 import domain.alert.SetAlertUseCase
+import domain.deal.DealModel
 import domain.deal.DealParams
 import domain.deal.DealSortingType
 import domain.deal.GetDealsUseCase
 import domain.deal.game.GetGameWithDealsUseCase
+import domain.game.recently.AddRecentlyViewedUseCase
+import domain.game.recently.GetRecentlyViewedUseCase
 import domain.shop.GetShopsUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -33,7 +38,7 @@ interface HomeComponent {
     fun getInitialDeals()
     fun getMoreDeals()
     fun openAlerts()
-    fun openGame(gameID: String)
+    fun openGame(deal: DealModel)
     fun changeQuery(query: String)
     fun changeSorting(type: DealSortingType)
     fun changeMaxPrice(maxPrice: Int?)
@@ -48,6 +53,8 @@ class DefaultHomeComponent(
     private val getGameWithDealsUseCase: GetGameWithDealsUseCase,
     private val getAlertEmailUseCase: GetAlertEmailUseCase,
     private val setAlertUseCase: SetAlertUseCase,
+    private val getRecentlyViewedUseCase: GetRecentlyViewedUseCase,
+    private val addRecentlyViewedUseCase: AddRecentlyViewedUseCase,
     private val browserOpener: BrowserOpener,
 ) : HomeComponent, ComponentContext by context {
     private val _state = MutableStateFlow(HomeState())
@@ -82,6 +89,11 @@ class DefaultHomeComponent(
         scope.launch {
             val shops = getShopsUseCase()
             _state.update { state -> state.copy(shops = shops) }
+        }
+        scope.launch {
+            getRecentlyViewedUseCase().onEach {
+                println("RECENTLY_VIEWED $it")
+            }.launchIn(this)
         }
     }
 
@@ -154,8 +166,9 @@ class DefaultHomeComponent(
         navigateToAlerts()
     }
 
-    override fun openGame(gameID: String) {
-        gameNavigation.activate(GameConfig(gameID = gameID))
+    override fun openGame(deal: DealModel) {
+        scope.launch { addRecentlyViewedUseCase(deal) }
+        gameNavigation.activate(GameConfig(gameID = deal.gameID))
     }
 
     override fun changeQuery(query: String) {

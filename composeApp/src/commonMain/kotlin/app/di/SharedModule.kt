@@ -6,6 +6,8 @@ import domain.alert.GetAlertsUseCase
 import domain.alert.SetAlertUseCase
 import domain.deal.GetDealsUseCase
 import domain.deal.game.GetGameWithDealsUseCase
+import domain.game.recently.AddRecentlyViewedUseCase
+import domain.game.recently.GetRecentlyViewedUseCase
 import domain.shop.GetShopsUseCase
 
 interface SharedModule {
@@ -16,4 +18,6 @@ interface SharedModule {
     fun provideGetAlertEmailUseCase(): GetAlertEmailUseCase
     fun provideGetAlertsUseCase(): GetAlertsUseCase
     fun provideDeleteAlertUseCase(): DeleteAlertUseCase
+    fun provideAddRecentlyViewedUseCase(): AddRecentlyViewedUseCase
+    fun provideGetRecentlyViewedUseCase(): GetRecentlyViewedUseCase
 }

@@ -7,10 +7,13 @@ import data.datasource.alert.RemoteAlertDataSource
 import data.datasource.alert.SqlDelightLocalAlertDataSource
 import data.datasource.deal.DealDataSource
 import data.datasource.deal.KtorDealDataSource
+import data.datasource.game.recently.RecentlyViewedDataSource
+import data.datasource.game.recently.SqlDelightRecentlyViewedDataSource
 import data.datasource.shop.KtorShopDataSource
 import data.datasource.shop.ShopDataSource
 import data.repository.alert.DefaultAlertRepository
 import data.repository.deal.DefaultDealRepository
+import data.repository.game.recently.DefaultRecentlyViewedRepository
 import data.repository.shop.DefaultShopRepository
 import domain.alert.AlertRepository
 import domain.alert.DeleteAlertUseCase
@@ -20,6 +23,9 @@ import domain.alert.SetAlertUseCase
 import domain.deal.DealRepository
 import domain.deal.GetDealsUseCase
 import domain.deal.game.GetGameWithDealsUseCase
+import domain.game.recently.AddRecentlyViewedUseCase
+import domain.game.recently.GetRecentlyViewedUseCase
+import domain.game.recently.RecentlyViewedRepository
 import domain.shop.GetShopsUseCase
 import domain.shop.ShopRepository
 
@@ -47,6 +53,12 @@ class DefaultSharedModule(
     override fun provideDeleteAlertUseCase(): DeleteAlertUseCase =
         DeleteAlertUseCase(alertRepository = provideAlertRepository())
 
+    override fun provideAddRecentlyViewedUseCase(): AddRecentlyViewedUseCase =
+        AddRecentlyViewedUseCase(repository = provideRecentlyViewedRepository())
+
+    override fun provideGetRecentlyViewedUseCase(): GetRecentlyViewedUseCase =
+        GetRecentlyViewedUseCase(repository = provideRecentlyViewedRepository())
+
     private fun provideDealRepository(): DealRepository =
         DefaultDealRepository(dealDataSource = provideDealDataSource())
 
@@ -70,4 +82,10 @@ class DefaultSharedModule(
 
     private fun provideLocalAlertDataSource(): LocalAlertDataSource =
         SqlDelightLocalAlertDataSource(db = db)
+
+    private fun provideRecentlyViewedRepository(): RecentlyViewedRepository =
+        DefaultRecentlyViewedRepository(recentlyViewedDataSource = provideRecentlyViewedDataSource())
+
+    private fun provideRecentlyViewedDataSource(): RecentlyViewedDataSource =
+        SqlDelightRecentlyViewedDataSource(db = db)
 }

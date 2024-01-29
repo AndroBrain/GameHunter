@@ -180,9 +180,7 @@ fun HomeScreen(
                                 DealCard(
                                     modifier = dealModifier,
                                     deal = deal,
-                                    onClick = {
-                                        component.openGame(deal.gameID)
-                                    },
+                                    onClick = { component.openGame(deal) },
                                 )
                             }
                             if (state.isLoadingMore) {
