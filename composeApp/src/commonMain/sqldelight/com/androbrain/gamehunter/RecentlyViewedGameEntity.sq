@@ -2,14 +2,15 @@ CREATE TABLE RecentlyViewedGameEntity (
     title TEXT NOT NULL PRIMARY KEY,
     thumb TEXT NOT NULL,
     steamRatingText TEXT,
+    steamRatingPercent INTEGER,
     steamRatingCount INTEGER,
     metacriticRating TEXT,
     cheapSharkGameID TEXT
 );
 
 insert:
-INSERT OR REPLACE INTO RecentlyViewedGameEntity(title, thumb,  steamRatingText, steamRatingCount, metacriticRating, cheapSharkGameID)
-VALUES(?,?,?,?,?,?);
+INSERT OR REPLACE INTO RecentlyViewedGameEntity(title, thumb,  steamRatingText, steamRatingPercent, steamRatingCount, metacriticRating, cheapSharkGameID)
+VALUES(?,?,?,?,?,?,?);
 
 get:
 SELECT * FROM RecentlyViewedGameEntity;

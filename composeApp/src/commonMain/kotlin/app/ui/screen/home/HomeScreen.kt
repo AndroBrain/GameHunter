@@ -49,7 +49,9 @@ import app.ui.composable.modifier.scaleOnClick
 import app.ui.dialog.game.GameDialog
 import app.ui.screen.home.deal.DealCard
 import app.ui.screen.home.params.DealParams
+import app.ui.screen.home.recently.viewed.RecentlyViewedContent
 import app.ui.theme.Resources
+import app.util.composable.modifier.ignoreHorizontalParentPadding
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 
 private const val ITEMS_TO_SHOW_MORE_DEALS = 5
@@ -65,6 +67,7 @@ fun HomeScreen(
         component.getInitialDeals()
     }
     val visibleItemsInfo = gridState.layoutInfo.visibleItemsInfo
+    gridState.layoutInfo.viewportSize
     LaunchedEffect(visibleItemsInfo) {
         val lastVisibleItem = visibleItemsInfo.lastOrNull() ?: return@LaunchedEffect
         if (lastVisibleItem.index + ITEMS_TO_SHOW_MORE_DEALS > gridState.layoutInfo.totalItemsCount) {
@@ -112,7 +115,6 @@ fun HomeScreen(
         },
         modifier = modifier,
     ) { insets ->
-        val dealModifier = Modifier.padding(bottom = Resources.dimens.viewsSpacingSmall)
         if (state.isInError) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -164,6 +166,8 @@ fun HomeScreen(
                             )
                         }
                     } else {
+                        val dealModifier =
+                            Modifier.padding(bottom = Resources.dimens.viewsSpacingSmall)
                         LazyVerticalGrid(
                             state = gridState,
                             modifier = Modifier.fillMaxSize(),
@@ -176,6 +180,15 @@ fun HomeScreen(
                             ),
                             horizontalArrangement = Arrangement.spacedBy(Resources.dimens.viewsSpacingSmall)
                         ) {
+                            if (state.recentlyViewed.isNotEmpty()) {
+                                item(span = { GridItemSpan(maxLineSpan) }) {
+                                    RecentlyViewedContent(
+                                        modifier = Modifier.fillMaxWidth()
+                                            .ignoreHorizontalParentPadding(horizontal = Resources.dimens.screenSpacingSmall),
+                                        items = state.recentlyViewed,
+                                    )
+                                }
+                            }
                             items(state.deals) { deal ->
                                 DealCard(
                                     modifier = dealModifier,

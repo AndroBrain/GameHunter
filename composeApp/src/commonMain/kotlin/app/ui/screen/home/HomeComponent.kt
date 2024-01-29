@@ -91,8 +91,9 @@ class DefaultHomeComponent(
             _state.update { state -> state.copy(shops = shops) }
         }
         scope.launch {
-            getRecentlyViewedUseCase().onEach {
-                println("RECENTLY_VIEWED $it")
+            getRecentlyViewedUseCase().onEach { recentlyViewed ->
+                _state.update { state -> state.copy(recentlyViewed = recentlyViewed) }
+                println("RECENTLY_VIEWED $recentlyViewed")
             }.launchIn(this)
         }
     }

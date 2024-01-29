@@ -17,9 +17,10 @@ class SqlDelightRecentlyViewedDataSource(
             thumb = entity.thumb,
             title = entity.title,
             steamRatingText = entity.steamRatingText,
+            steamRatingPercent = entity.steamRatingPercent,
             steamRatingCount = entity.steamRatingCount,
             metacriticRating = entity.metacriticRating,
-            cheapSharkGameID = entity.cheapSharkGameID
+            cheapSharkGameID = entity.cheapSharkGameID,
         )
     }
 
