@@ -22,6 +22,7 @@ import domain.game.recently.RecentlyViewedModel
 fun RecentlyViewedContent(
     modifier: Modifier = Modifier,
     items: List<RecentlyViewedModel>,
+    onClick: (RecentlyViewedModel) -> Unit,
 ) {
     val cardModifier = Modifier.padding(end = Resources.dimens.viewsSpacingSmall)
         .width(Resources.dimens.dealMinSize)
@@ -43,7 +44,7 @@ fun RecentlyViewedContent(
                 RecentlyViewedCard(
                     modifier = cardModifier,
                     model = item,
-                    onClick = {},
+                    onClick = { onClick(item) },
                 )
             }
         }

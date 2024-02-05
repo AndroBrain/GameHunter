@@ -39,6 +39,7 @@ interface HomeComponent {
     fun getMoreDeals()
     fun openAlerts()
     fun openGame(deal: DealModel)
+    fun openRecentlyViewed(gameID: String?)
     fun changeQuery(query: String)
     fun changeSorting(type: DealSortingType)
     fun changeMaxPrice(maxPrice: Int?)
@@ -170,6 +171,14 @@ class DefaultHomeComponent(
     override fun openGame(deal: DealModel) {
         scope.launch { addRecentlyViewedUseCase(deal) }
         gameNavigation.activate(GameConfig(gameID = deal.gameID))
+    }
+
+    override fun openRecentlyViewed(gameID: String?) {
+        if (gameID == null) {
+            // TODO display an error message that there currently are no deals for the game
+        } else {
+            gameNavigation.activate(GameConfig(gameID = gameID))
+        }
     }
 
     override fun changeQuery(query: String) {

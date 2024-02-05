@@ -186,6 +186,7 @@ fun HomeScreen(
                                         modifier = Modifier.fillMaxWidth()
                                             .ignoreHorizontalParentPadding(horizontal = Resources.dimens.screenSpacingSmall),
                                         items = state.recentlyViewed,
+                                        onClick = { model -> component.openRecentlyViewed(model.cheapSharkGameID) }
                                     )
                                 }
                             }
