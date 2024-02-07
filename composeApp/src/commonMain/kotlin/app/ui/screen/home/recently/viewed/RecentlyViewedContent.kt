@@ -31,7 +31,7 @@ fun RecentlyViewedContent(
     ) {
         Text(
             modifier = Modifier.padding(horizontal = Resources.dimens.screenSpacingSmall),
-            text = "Recently viewed:",
+            text = Resources.strings.recentlyViewed,
             style = MaterialTheme.typography.headlineSmall
         )
         Spacer(modifier = Modifier.height(Resources.dimens.viewsSpacingSmall))

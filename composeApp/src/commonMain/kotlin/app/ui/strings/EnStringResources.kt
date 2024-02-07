@@ -22,6 +22,9 @@ class EnStringResources : StringResources {
     override val gameNamePlaceholder: String
         get() = "Game name…"
 
+    override val recentlyViewed: String
+        get() = "Recently Viewed:"
+
     override fun sortingType(sortingType: DealSortingType): String = when (sortingType) {
         DealSortingType.DEAL_RATING -> "Deal rating"
         DealSortingType.TITLE -> "Title"
