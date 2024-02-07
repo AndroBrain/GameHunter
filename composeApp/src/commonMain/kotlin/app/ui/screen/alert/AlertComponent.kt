@@ -39,7 +39,6 @@ class DefaultAlertComponent(
     init {
         scope.launch {
             getAlertsUseCase().onEach { alerts ->
-                println(alerts)
                 _state.update { state -> state.copy(alerts = alerts) }
             }.launchIn(this)
         }
