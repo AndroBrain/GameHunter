@@ -166,7 +166,6 @@ class DefaultHomeComponent(
     }
 
     override fun openAlerts() {
-        setMessage(Message.NETWORK_ERROR)
         navigateToAlerts()
     }
 
