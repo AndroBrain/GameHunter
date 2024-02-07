@@ -33,4 +33,6 @@ interface StringResources {
     val reload: String
 
     val alerts: String
+
+    val errNetwork: String
 }

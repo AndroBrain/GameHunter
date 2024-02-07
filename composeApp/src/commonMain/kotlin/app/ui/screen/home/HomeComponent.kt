@@ -2,6 +2,7 @@ package app.ui.screen.home
 
 import app.ui.dialog.game.DefaultGameComponent
 import app.ui.dialog.game.GameComponent
+import app.ui.screen.root.Message
 import app.util.BrowserOpener
 import app.util.coroutineScope
 import com.arkivanov.decompose.ComponentContext
@@ -57,6 +58,7 @@ class DefaultHomeComponent(
     private val getRecentlyViewedUseCase: GetRecentlyViewedUseCase,
     private val addRecentlyViewedUseCase: AddRecentlyViewedUseCase,
     private val browserOpener: BrowserOpener,
+    private val setMessage: (Message) -> Unit,
 ) : HomeComponent, ComponentContext by context {
     private val _state = MutableStateFlow(HomeState())
     override val state = _state.asStateFlow()
@@ -94,7 +96,6 @@ class DefaultHomeComponent(
         scope.launch {
             getRecentlyViewedUseCase().onEach { recentlyViewed ->
                 _state.update { state -> state.copy(recentlyViewed = recentlyViewed) }
-                println("RECENTLY_VIEWED $recentlyViewed")
             }.launchIn(this)
         }
     }
@@ -165,6 +166,7 @@ class DefaultHomeComponent(
     }
 
     override fun openAlerts() {
+        setMessage(Message.NETWORK_ERROR)
         navigateToAlerts()
     }
 

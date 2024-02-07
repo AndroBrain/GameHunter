@@ -11,9 +11,15 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 interface RootComponent {
     val childStack: Value<ChildStack<*, Child>>
+    val state: StateFlow<RootState>
+    fun messageShown()
 }
 
 class DefaultRootComponent(
@@ -30,6 +36,11 @@ class DefaultRootComponent(
         handleBackButton = true,
         childFactory = ::createChild,
     )
+    private val _state = MutableStateFlow(RootState())
+    override val state = _state.asStateFlow()
+    override fun messageShown() {
+        _state.update { state -> state.copy(message = null) }
+    }
 
     private fun createChild(
         config: ScreenConfig,
@@ -47,6 +58,7 @@ class DefaultRootComponent(
                 browserOpener = frameworkModule.provideBrowserOpener(),
                 getRecentlyViewedUseCase = sharedModule.provideGetRecentlyViewedUseCase(),
                 addRecentlyViewedUseCase = sharedModule.provideAddRecentlyViewedUseCase(),
+                setMessage = ::setMessage,
             )
         )
 
@@ -58,5 +70,9 @@ class DefaultRootComponent(
                 close = { navigation.pop() },
             )
         )
+    }
+
+    private fun setMessage(message: Message) {
+        _state.update { state -> state.copy(message = message) }
     }
 }
