@@ -2,11 +2,10 @@ package data.datasource.alert
 
 import data.api.HOST_URL
 import data.api.useClient
+import data.core.ApiResponse
 import domain.alert.DeleteAlertParams
 import domain.alert.SetAlertParams
 import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsText
-import kotlinx.serialization.json.Json
 
 private const val ALERT_PATH = "alerts"
 private const val ACTION_PARAM = "action"
@@ -18,8 +17,8 @@ private const val ACTION_SET = "set"
 private const val ACTION_DELETE = "delete"
 
 class KtorRemoteAlertDataSource : RemoteAlertDataSource {
-    override suspend fun setAlert(params: SetAlertParams): Boolean {
-        val response = useClient { client ->
+    override suspend fun setAlert(params: SetAlertParams): ApiResponse<Boolean> =
+        useClient { client ->
             client.get("$HOST_URL/$ALERT_PATH") {
                 url {
                     parameters.append(ACTION_PARAM, ACTION_SET)
@@ -29,11 +28,9 @@ class KtorRemoteAlertDataSource : RemoteAlertDataSource {
                 }
             }
         }
-        return Json.decodeFromString<Boolean>(response.bodyAsText())
-    }
 
-    override suspend fun removeAlert(params: DeleteAlertParams): Boolean {
-        val response = useClient { client ->
+    override suspend fun removeAlert(params: DeleteAlertParams): ApiResponse<Boolean> =
+        useClient { client ->
             client.get("$HOST_URL/$ALERT_PATH") {
                 url {
                     parameters.append(ACTION_PARAM, ACTION_DELETE)
@@ -42,6 +39,4 @@ class KtorRemoteAlertDataSource : RemoteAlertDataSource {
                 }
             }
         }
-        return Json.decodeFromString<Boolean>(response.bodyAsText())
-    }
 }

@@ -3,6 +3,7 @@ package app.ui.dialog.game
 import app.ui.dialog.game.model.GameWithDealsDisplayable
 import app.ui.dialog.notification.DefaultNotificationComponent
 import app.ui.dialog.notification.NotificationComponent
+import app.ui.screen.root.Message
 import app.util.BrowserOpener
 import app.util.coroutineScope
 import app.util.dealLink
@@ -15,6 +16,7 @@ import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
 import domain.alert.GetAlertEmailUseCase
 import domain.alert.SetAlertUseCase
+import domain.core.fold
 import domain.deal.game.GetGameWithDealsUseCase
 import domain.shop.ShopModel
 import kotlinx.coroutines.SupervisorJob
@@ -41,6 +43,7 @@ class DefaultGameComponent(
     private val getAlertEmailUseCase: GetAlertEmailUseCase,
     private val browserOpener: BrowserOpener,
     private val shops: Map<String, ShopModel>,
+    private val setMessage: (Message) -> Unit,
 ) : GameComponent, ComponentContext by context {
     private val _state = MutableStateFlow(GameState())
     override val state = _state.asStateFlow()
@@ -59,6 +62,7 @@ class DefaultGameComponent(
                     dismiss = notificationNavigation::dismiss,
                     setAlertUseCase = setAlertUseCase,
                     getAlertEmailUseCase = getAlertEmailUseCase,
+                    setMessage = setMessage,
                 )
             }
         )
@@ -68,12 +72,22 @@ class DefaultGameComponent(
 
     init {
         scope.launch {
-            val gameWithDeals = getGameWithDealsUseCase(gameID)
-            _state.update { state ->
-                state.copy(
-                    gameWithDeals = GameWithDealsDisplayable(gameWithDeals, shops),
+            getGameWithDealsUseCase(gameID)
+                .fold(
+                    onOk = { gameWithDeals ->
+                        _state.update { state ->
+                            state.copy(
+                                gameWithDeals = GameWithDealsDisplayable(
+                                    gameWithDeals.value,
+                                    shops
+                                ),
+                            )
+                        }
+                    },
+                    onError = {
+                        setMessage(Message.fromError(it.type))
+                    }
                 )
-            }
         }
     }
 

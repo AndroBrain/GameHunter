@@ -68,6 +68,7 @@ class DefaultRootComponent(
                 getAlertsUseCase = sharedModule.provideGetAlertsUseCase(),
                 deleteAlertUseCase = sharedModule.provideDeleteAlertUseCase(),
                 close = { navigation.pop() },
+                setMessage = ::setMessage,
             )
         )
     }

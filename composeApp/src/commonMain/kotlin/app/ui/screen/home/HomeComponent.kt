@@ -14,6 +14,7 @@ import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
 import domain.alert.GetAlertEmailUseCase
 import domain.alert.SetAlertUseCase
+import domain.core.fold
 import domain.deal.DealModel
 import domain.deal.DealParams
 import domain.deal.DealSortingType
@@ -83,6 +84,7 @@ class DefaultHomeComponent(
                     shops = state.value.shops.groupBy { it.storeID }.mapValues { it.value.first() },
                     setAlertUseCase = setAlertUseCase,
                     getAlertEmailUseCase = getAlertEmailUseCase,
+                    setMessage = setMessage,
                 )
             }
         )
@@ -90,8 +92,12 @@ class DefaultHomeComponent(
 
     init {
         scope.launch {
-            val shops = getShopsUseCase()
-            _state.update { state -> state.copy(shops = shops) }
+            getShopsUseCase().fold(
+                onOk = { shops ->
+                    _state.update { state -> state.copy(shops = shops.value) }
+                },
+                onError = { setMessage(Message.fromError(it.type)) }
+            )
         }
         scope.launch {
             getRecentlyViewedUseCase().onEach { recentlyViewed ->
@@ -105,7 +111,7 @@ class DefaultHomeComponent(
         _state.update { state -> state.copy(isLoadingInitial = true, isInError = false) }
         loadInitialJob = scope.launch {
             val currentState = state.value
-            val deals = getDealsUseCase(
+            getDealsUseCase(
                 DealParams(
                     pageNumber = 0,
                     sortingType = currentState.sortingType,
@@ -113,22 +119,23 @@ class DefaultHomeComponent(
                     maxPrice = currentState.maxPrice,
                     onSale = currentState.onSale,
                 )
+            ).fold(
+                onOk = { deals ->
+                    _state.update { state ->
+                        state.copy(
+                            deals = deals.value,
+                            isLoadingInitial = false,
+                            page = 1,
+                            isFinalPage = false,
+                            isInError = false,
+                        )
+                    }
+                },
+                onError = {
+                    setMessage(Message.fromError(it.type))
+                    _state.update { state -> state.copy(isInError = true) }
+                }
             )
-            if (deals == null) {
-                _state.update { state ->
-                    state.copy(isInError = true)
-                }
-            } else {
-                _state.update { state ->
-                    state.copy(
-                        deals = deals,
-                        isLoadingInitial = false,
-                        page = 1,
-                        isFinalPage = false,
-                        isInError = false,
-                    )
-                }
-            }
         }
         loadInitialJob?.invokeOnCompletion {
             loadInitialJob = null
@@ -140,7 +147,7 @@ class DefaultHomeComponent(
         _state.update { state -> state.copy(isLoadingMore = true) }
         loadMoreJob = scope.launch {
             val currentState = state.value
-            val deals = getDealsUseCase(
+            getDealsUseCase(
                 DealParams(
                     pageNumber = currentState.page,
                     sortingType = currentState.sortingType,
@@ -148,17 +155,21 @@ class DefaultHomeComponent(
                     maxPrice = currentState.maxPrice,
                     onSale = currentState.onSale,
                 )
-            )
-            if (deals != null) {
-                _state.update { state ->
-                    state.copy(
-                        deals = state.deals + deals,
-                        isLoadingMore = false,
-                        page = state.page + 1,
-                        isFinalPage = deals.isEmpty(),
-                    )
+            ).fold(
+                onOk = { deals ->
+                    _state.update { state ->
+                        state.copy(
+                            deals = state.deals + deals.value,
+                            isLoadingMore = false,
+                            page = state.page + 1,
+                            isFinalPage = deals.value.isEmpty(),
+                        )
+                    }
+                },
+                onError = {
+                    setMessage(Message.fromError(it.type))
                 }
-            }
+            )
         }
         loadMoreJob?.invokeOnCompletion {
             loadMoreJob = null

@@ -35,4 +35,5 @@ interface StringResources {
     val alerts: String
 
     val errNetwork: String
+    val errUnknown: String
 }
