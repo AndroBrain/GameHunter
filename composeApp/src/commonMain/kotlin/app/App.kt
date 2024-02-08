@@ -26,8 +26,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun App(
     root: RootComponent,
+    darkTheme: Boolean = true,
 ) {
-    AppTheme {
+    AppTheme(darkTheme = darkTheme) {
         val snackbarHostState = remember { SnackbarHostState() }
         val coroutineScope = rememberCoroutineScope()
         val state by root.state.collectAsState()
