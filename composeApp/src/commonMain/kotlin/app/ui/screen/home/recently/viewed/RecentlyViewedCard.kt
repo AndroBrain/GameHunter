@@ -93,6 +93,11 @@ fun RecentlyViewedCard(
                         metaScore = metaScore
                     )
                 }
+                if (model.steamRatingPercent == null && (model.steamRatingCount == null || model.steamRatingCount <= 0) && metaScore == null
+                ) {
+                    Spacer(modifier = Modifier.height(Resources.dimens.dealIconSize))
+                    Text(text = "", style = style)
+                }
             }
             Spacer(modifier = Modifier.height(Resources.dimens.viewsSpacingExtraSmall))
         }
