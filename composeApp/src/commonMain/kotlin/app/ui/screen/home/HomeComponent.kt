@@ -91,6 +91,7 @@ class DefaultHomeComponent(
     override val gameSlot: Value<ChildSlot<*, GameComponent>> = _gameSlot
 
     init {
+        getInitialDeals()
         scope.launch {
             getShopsUseCase().fold(
                 onOk = { shops ->

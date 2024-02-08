@@ -37,6 +37,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -63,14 +64,15 @@ fun HomeScreen(
 ) {
     val gridState = rememberLazyGridState()
     val state by component.state.collectAsState()
-    LaunchedEffect(Unit) {
-        component.getInitialDeals()
+    val showMore by remember {
+        derivedStateOf {
+            val visibleItemsInfo = gridState.layoutInfo.visibleItemsInfo
+            val lastVisibleItem = visibleItemsInfo.lastOrNull()
+            lastVisibleItem != null && lastVisibleItem.index + ITEMS_TO_SHOW_MORE_DEALS > gridState.layoutInfo.totalItemsCount
+        }
     }
-    val visibleItemsInfo = gridState.layoutInfo.visibleItemsInfo
-    gridState.layoutInfo.viewportSize
-    LaunchedEffect(visibleItemsInfo) {
-        val lastVisibleItem = visibleItemsInfo.lastOrNull() ?: return@LaunchedEffect
-        if (lastVisibleItem.index + ITEMS_TO_SHOW_MORE_DEALS > gridState.layoutInfo.totalItemsCount) {
+    LaunchedEffect(showMore) {
+        if (showMore) {
             component.getMoreDeals()
         }
     }
