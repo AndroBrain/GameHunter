@@ -1,7 +1,7 @@
 package app.ui.dialog.game.model
 
+import app.ui.screen.home.params.shop.ShopDisplayable
 import domain.deal.game.GameWithDealsModel
-import domain.shop.ShopModel
 
 data class GameWithDealsDisplayable(
     val game: GameDisplayable,
@@ -9,7 +9,7 @@ data class GameWithDealsDisplayable(
 ) {
     constructor(
         model: GameWithDealsModel,
-        shops: Map<String, ShopModel>,
+        shops: Map<String, ShopDisplayable>,
     ) : this(
         game = GameDisplayable(
             title = model.info.title,
@@ -23,7 +23,7 @@ data class GameWithDealsDisplayable(
                 GameDealDisplayable(
                     dealID = deal.dealID,
                     storeName = shops[deal.storeID]?.storeName.orEmpty(),
-                    storeIcon = "https://www.cheapshark.com${shops[deal.storeID]?.images?.logo.orEmpty()}",
+                    storeIcon = shops[deal.storeID]?.images?.logo.orEmpty(),
                     price = deal.price,
                 )
             }

@@ -5,6 +5,8 @@ import domain.deal.DealSortingType
 class EnStringResources : StringResources {
     override val appName: String
         get() = "GameHunter"
+    override val confirm: String
+        get() = "Confirm"
     override val currencySign: String
         get() = "$"
     override val steamReviews: String
@@ -43,6 +45,10 @@ class EnStringResources : StringResources {
 
     override val onSaleOnly: String
         get() = "On sale only"
+
+    override fun shops(count: Int) = "Shops: $count"
+    override val shops: String
+        get() = "Shops:"
 
     override val noGamesUnderFilter: String
         get() = "There are no games under this filter"

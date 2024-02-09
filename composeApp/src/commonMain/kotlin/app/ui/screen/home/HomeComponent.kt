@@ -2,6 +2,7 @@ package app.ui.screen.home
 
 import app.ui.dialog.game.DefaultGameComponent
 import app.ui.dialog.game.GameComponent
+import app.ui.screen.home.params.shop.ShopDisplayable
 import app.ui.screen.root.Message
 import app.util.BrowserOpener
 import app.util.coroutineScope
@@ -81,7 +82,11 @@ class DefaultHomeComponent(
                     getGameWithDealsUseCase = getGameWithDealsUseCase,
                     dismiss = gameNavigation::dismiss,
                     browserOpener = browserOpener,
-                    shops = state.value.shops.groupBy { it.storeID }.mapValues { it.value.first() },
+                    shops = state.value.shops
+                        .asSequence()
+                        .filter { it.checked }
+                        .groupBy { it.storeID }
+                        .mapValues { it.value.first() },
                     setAlertUseCase = setAlertUseCase,
                     getAlertEmailUseCase = getAlertEmailUseCase,
                     setMessage = setMessage,
@@ -95,7 +100,7 @@ class DefaultHomeComponent(
         scope.launch {
             getShopsUseCase().fold(
                 onOk = { shops ->
-                    _state.update { state -> state.copy(shops = shops.value) }
+                    _state.update { state -> state.copy(shops = shops.value.map { ShopDisplayable(it) }) }
                 },
                 onError = { setMessage(Message.fromError(it.type)) }
             )

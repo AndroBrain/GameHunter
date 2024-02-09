@@ -4,6 +4,8 @@ import domain.deal.DealSortingType
 
 interface StringResources {
     val appName: String
+    val confirm: String
+
     val currencySign: String
     val steamReviews: String
     val steamRating: String
@@ -20,6 +22,8 @@ interface StringResources {
     val noLimit: String
     val maxPrice: String
     val onSaleOnly: String
+    fun shops(count: Int): String
+    val shops: String
 
     val noGamesUnderFilter: String
 

@@ -3,6 +3,7 @@ package app.ui.dialog.game
 import app.ui.dialog.game.model.GameWithDealsDisplayable
 import app.ui.dialog.notification.DefaultNotificationComponent
 import app.ui.dialog.notification.NotificationComponent
+import app.ui.screen.home.params.shop.ShopDisplayable
 import app.ui.screen.root.Message
 import app.util.BrowserOpener
 import app.util.coroutineScope
@@ -18,7 +19,6 @@ import domain.alert.GetAlertEmailUseCase
 import domain.alert.SetAlertUseCase
 import domain.core.fold
 import domain.deal.game.GetGameWithDealsUseCase
-import domain.shop.ShopModel
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -42,7 +42,7 @@ class DefaultGameComponent(
     private val setAlertUseCase: SetAlertUseCase,
     private val getAlertEmailUseCase: GetAlertEmailUseCase,
     private val browserOpener: BrowserOpener,
-    private val shops: Map<String, ShopModel>,
+    private val shops: Map<String, ShopDisplayable>,
     private val setMessage: (Message) -> Unit,
 ) : GameComponent, ComponentContext by context {
     private val _state = MutableStateFlow(GameState())

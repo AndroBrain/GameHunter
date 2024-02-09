@@ -1,9 +1,9 @@
 package app.ui.screen.home
 
+import app.ui.screen.home.params.shop.ShopDisplayable
 import domain.deal.DealModel
 import domain.deal.DealSortingType
 import domain.game.recently.RecentlyViewedModel
-import domain.shop.ShopModel
 
 data class HomeState(
     val deals: List<DealModel> = emptyList(),
@@ -12,7 +12,7 @@ data class HomeState(
     val page: Int = 0,
     val isFinalPage: Boolean = false,
     val recentlyViewed: List<RecentlyViewedModel> = emptyList(),
-    val shops: List<ShopModel> = emptyList(),
+    val shops: List<ShopDisplayable> = emptyList(),
     val query: String = "",
     val sortingType: DealSortingType = DealSortingType.DEAL_RATING,
     val maxPrice: Int? = null,

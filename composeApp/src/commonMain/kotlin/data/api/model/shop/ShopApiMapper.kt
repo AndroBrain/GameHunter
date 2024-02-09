@@ -13,5 +13,7 @@ fun ShopResponse.toModel() = ShopModel(
 )
 
 fun ShopImagesResponse.toModel() = ShopImagesModel(
-    banner = banner, icon = icon, logo = logo,
+    banner = "https://www.cheapshark.com$banner",
+    icon = "https://www.cheapshark.com$icon",
+    logo = "https://www.cheapshark.com$logo",
 )
