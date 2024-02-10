@@ -18,7 +18,7 @@ class EnStringResources : StringResources {
         get() = " | Metacritic: "
 
     override val cheapestPriceEver: String
-        get() = " — cheapest price ever"
+        get() = " — cheapest price"
     override val getInTheseShops: String
         get() = "Get the game in these shops:"
     override val gameNamePlaceholder: String
