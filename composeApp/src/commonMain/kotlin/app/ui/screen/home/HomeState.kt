@@ -18,4 +18,7 @@ data class HomeState(
     val maxPrice: Int? = null,
     val onSale: Boolean = false,
     val isInError: Boolean = false,
+
+    val paramsFirstItemIndex: Int = 0,
+    val paramsFirstItemOffset: Int = 0,
 )

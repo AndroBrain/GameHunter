@@ -48,6 +48,7 @@ interface HomeComponent {
     fun changeMaxPrice(maxPrice: Int?)
     fun changeOnSale()
     fun changeShops(shops: List<ShopDisplayable>)
+    fun saveParamsScrollPosition(firstVisible: Int, scrollOffset: Int)
 }
 
 class DefaultHomeComponent(
@@ -238,6 +239,15 @@ class DefaultHomeComponent(
     override fun changeShops(shops: List<ShopDisplayable>) {
         _state.update { state -> state.copy(shops = shops) }
         getInitialDeals()
+    }
+
+    override fun saveParamsScrollPosition(firstVisible: Int, scrollOffset: Int) {
+        _state.update { state ->
+            state.copy(
+                paramsFirstItemIndex = firstVisible,
+                paramsFirstItemOffset = scrollOffset
+            )
+        }
     }
 
     private data class GameConfig(

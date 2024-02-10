@@ -119,7 +119,7 @@ fun HomeScreen(
     ) { insets ->
         if (state.isInError) {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.padding(insets).fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -134,79 +134,81 @@ fun HomeScreen(
             }
             return@Scaffold
         }
-        Crossfade(
-            modifier = Modifier.padding(insets).fillMaxSize(),
-            targetState = state.isLoadingInitial,
-        ) { isLoadingInitial ->
-            Column(modifier = Modifier.fillMaxSize()) {
-                DealParams(
-                    modifier = Modifier.padding(vertical = Resources.dimens.viewsSpacingSmall),
-                    state = state,
-                    component = component,
-                )
-                if (isLoadingInitial) {
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                    }
-                } else {
-                    if (state.deals.isEmpty()) {
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            Icon(
-                                modifier = Modifier.size(Resources.dimens.noDealsIconSize),
-                                imageVector = Icons.Default.ShoppingCart,
-                                contentDescription = null,
-                            )
-                            Spacer(modifier = Modifier.height(Resources.dimens.viewsSpacingSmall))
-                            Text(
-                                text = Resources.strings.noGamesUnderFilter,
-                                style = MaterialTheme.typography.titleMedium,
-                                textAlign = TextAlign.Center,
-                            )
+        Column(modifier = Modifier.padding(insets).fillMaxSize()) {
+            DealParams(
+                modifier = Modifier.padding(vertical = Resources.dimens.viewsSpacingSmall),
+                state = state,
+                component = component,
+            )
+            Crossfade(
+                modifier = Modifier.weight(1F),
+                targetState = state.isLoadingInitial,
+            ) { isLoadingInitial ->
+                Column(modifier = Modifier.fillMaxSize()) {
+                    if (isLoadingInitial) {
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                         }
                     } else {
-                        val dealModifier =
-                            Modifier.padding(bottom = Resources.dimens.viewsSpacingSmall)
-                        LazyVerticalGrid(
-                            state = gridState,
-                            modifier = Modifier.fillMaxSize(),
-                            columns = GridCells.Adaptive(minSize = Resources.dimens.dealMinSize),
-                            contentPadding = PaddingValues(
-                                start = Resources.dimens.screenSpacingSmall,
-                                top = Resources.dimens.screenSpacingSmall,
-                                end = Resources.dimens.screenSpacingSmall,
-                                bottom = Resources.dimens.screenSpacingMedium,
-                            ),
-                            horizontalArrangement = Arrangement.spacedBy(Resources.dimens.viewsSpacingSmall)
-                        ) {
-                            if (state.recentlyViewed.isNotEmpty()) {
-                                item(span = { GridItemSpan(maxLineSpan) }) {
-                                    RecentlyViewedContent(
-                                        modifier = Modifier.fillMaxWidth()
-                                            .ignoreHorizontalParentPadding(horizontal = Resources.dimens.screenSpacingSmall),
-                                        items = state.recentlyViewed,
-                                        onClick = { model -> component.openRecentlyViewed(model.cheapSharkGameID) }
-                                    )
-                                }
-                            }
-                            items(state.deals) { deal ->
-                                DealCard(
-                                    modifier = dealModifier,
-                                    deal = deal,
-                                    onClick = { component.openGame(deal) },
+                        if (state.deals.isEmpty()) {
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                Icon(
+                                    modifier = Modifier.size(Resources.dimens.noDealsIconSize),
+                                    imageVector = Icons.Default.ShoppingCart,
+                                    contentDescription = null,
+                                )
+                                Spacer(modifier = Modifier.height(Resources.dimens.viewsSpacingSmall))
+                                Text(
+                                    text = Resources.strings.noGamesUnderFilter,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    textAlign = TextAlign.Center,
                                 )
                             }
-                            if (state.isLoadingMore) {
-                                item(span = { GridItemSpan(maxLineSpan) }) {
-                                    Box(modifier = Modifier.fillMaxSize()) {
-                                        CircularProgressIndicator(
-                                            modifier = Modifier.align(
-                                                Alignment.TopCenter
-                                            )
+                        } else {
+                            val dealModifier =
+                                Modifier.padding(bottom = Resources.dimens.viewsSpacingSmall)
+                            LazyVerticalGrid(
+                                state = gridState,
+                                modifier = Modifier.fillMaxSize(),
+                                columns = GridCells.Adaptive(minSize = Resources.dimens.dealMinSize),
+                                contentPadding = PaddingValues(
+                                    start = Resources.dimens.screenSpacingSmall,
+                                    top = Resources.dimens.screenSpacingSmall,
+                                    end = Resources.dimens.screenSpacingSmall,
+                                    bottom = Resources.dimens.screenSpacingMedium,
+                                ),
+                                horizontalArrangement = Arrangement.spacedBy(Resources.dimens.viewsSpacingSmall)
+                            ) {
+                                if (state.recentlyViewed.isNotEmpty()) {
+                                    item(span = { GridItemSpan(maxLineSpan) }) {
+                                        RecentlyViewedContent(
+                                            modifier = Modifier.fillMaxWidth()
+                                                .ignoreHorizontalParentPadding(horizontal = Resources.dimens.screenSpacingSmall),
+                                            items = state.recentlyViewed,
+                                            onClick = { model -> component.openRecentlyViewed(model.cheapSharkGameID) }
                                         )
+                                    }
+                                }
+                                items(state.deals) { deal ->
+                                    DealCard(
+                                        modifier = dealModifier,
+                                        deal = deal,
+                                        onClick = { component.openGame(deal) },
+                                    )
+                                }
+                                if (state.isLoadingMore) {
+                                    item(span = { GridItemSpan(maxLineSpan) }) {
+                                        Box(modifier = Modifier.fillMaxSize()) {
+                                            CircularProgressIndicator(
+                                                modifier = Modifier.align(
+                                                    Alignment.TopCenter
+                                                )
+                                            )
+                                        }
                                     }
                                 }
                             }
