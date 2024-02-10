@@ -17,13 +17,14 @@ import app.ui.theme.Resources
 fun ShopParam(
     modifier: Modifier = Modifier,
     shops: List<ShopDisplayable>,
+    onShopsChanged: (List<ShopDisplayable>) -> Unit,
 ) {
     var shopVisible by remember { mutableStateOf(false) }
     if (shopVisible) {
         ShopDialog(
             onDismiss = { shopVisible = false },
-            onConfirm = {
-                // TODO request all the data again including this filter
+            onConfirm = { shops ->
+                onShopsChanged(shops)
                 shopVisible = false
             },
             shops = shops,

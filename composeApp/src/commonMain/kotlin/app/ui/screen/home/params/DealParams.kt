@@ -49,7 +49,7 @@ fun DealParams(
             OnSaleParam(onSale = state.onSale, onClick = component::changeOnSale)
             if (state.shops.isNotEmpty()) {
                 Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
-                ShopParam(shops = state.shops)
+                ShopParam(shops = state.shops, onShopsChanged = component::changeShops)
             }
         }
     }

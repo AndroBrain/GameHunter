@@ -6,4 +6,5 @@ data class DealParams(
     val query: String,
     val maxPrice: Int?,
     val onSale: Boolean,
+    val storeIds: List<String>,
 )

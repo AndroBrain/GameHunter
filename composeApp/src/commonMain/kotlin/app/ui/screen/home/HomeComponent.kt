@@ -47,6 +47,7 @@ interface HomeComponent {
     fun changeSorting(type: DealSortingType)
     fun changeMaxPrice(maxPrice: Int?)
     fun changeOnSale()
+    fun changeShops(shops: List<ShopDisplayable>)
 }
 
 class DefaultHomeComponent(
@@ -124,6 +125,7 @@ class DefaultHomeComponent(
                     query = currentState.query,
                     maxPrice = currentState.maxPrice,
                     onSale = currentState.onSale,
+                    storeIds = currentState.shops.map { it.storeID },
                 )
             ).fold(
                 onOk = { deals ->
@@ -160,6 +162,7 @@ class DefaultHomeComponent(
                     query = currentState.query,
                     maxPrice = currentState.maxPrice,
                     onSale = currentState.onSale,
+                    storeIds = currentState.shops.map { it.storeID },
                 )
             ).fold(
                 onOk = { deals ->
@@ -221,6 +224,11 @@ class DefaultHomeComponent(
 
     override fun changeOnSale() {
         _state.update { state -> state.copy(onSale = !state.onSale) }
+        getInitialDeals()
+    }
+
+    override fun changeShops(shops: List<ShopDisplayable>) {
+        _state.update { state -> state.copy(shops = shops) }
         getInitialDeals()
     }
 

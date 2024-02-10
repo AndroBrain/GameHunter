@@ -11,13 +11,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,10 +35,10 @@ import app.ui.theme.Resources
 fun ShopDialog(
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit,
-    onConfirm: () -> Unit,
+    onConfirm: (List<ShopDisplayable>) -> Unit,
     shops: List<ShopDisplayable>,
-    // TODO add on checked change?
 ) {
+    var dialogShops by remember { mutableStateOf(shops) }
     AlertDialog(
         modifier = modifier,
         onDismissRequest = onDismiss,
@@ -47,13 +51,16 @@ fun ShopDialog(
         },
         text = {
             LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-                items(shops) { shop ->
+                itemsIndexed(dialogShops) { index, shop ->
                     Row(
                         modifier = Modifier
                             .height(Resources.dimens.shopItemHeight)
                             .clip(MaterialTheme.shapes.small)
                             .clickable {
-// TODO change checked state
+                                dialogShops = dialogShops.toMutableList().apply {
+                                    val item = this[index]
+                                    this[index] = item.copy(checked = !item.checked)
+                                }
                             }
                             .padding(Resources.dimens.viewsSpacingExtraSmall),
                         verticalAlignment = Alignment.CenterVertically,
@@ -77,7 +84,7 @@ fun ShopDialog(
             Box(modifier = Modifier.fillMaxWidth()) {
                 Button(
                     modifier = Modifier.align(Alignment.Center).fillMaxWidth(0.7f),
-                    onClick = onConfirm,
+                    onClick = { onConfirm(dialogShops) },
                 ) {
                     Text(text = Resources.strings.confirm)
                 }
