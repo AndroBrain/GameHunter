@@ -125,7 +125,11 @@ class DefaultHomeComponent(
                     query = currentState.query,
                     maxPrice = currentState.maxPrice,
                     onSale = currentState.onSale,
-                    storeIds = currentState.shops.map { it.storeID },
+                    storeIds = currentState.shops
+                        .asSequence()
+                        .filter { it.checked }
+                        .map { it.storeID }
+                        .toList(),
                 )
             ).fold(
                 onOk = { deals ->
@@ -162,7 +166,11 @@ class DefaultHomeComponent(
                     query = currentState.query,
                     maxPrice = currentState.maxPrice,
                     onSale = currentState.onSale,
-                    storeIds = currentState.shops.map { it.storeID },
+                    storeIds = currentState.shops
+                        .asSequence()
+                        .filter { it.checked }
+                        .map { it.storeID }
+                        .toList(),
                 )
             ).fold(
                 onOk = { deals ->
