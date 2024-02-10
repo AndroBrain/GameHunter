@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -45,7 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.style.TextAlign
+import app.ui.composable.NoItemsContent
 import app.ui.composable.modifier.scaleOnClick
 import app.ui.dialog.game.GameDialog
 import app.ui.screen.home.deal.DealCard
@@ -151,23 +150,11 @@ fun HomeScreen(
                         }
                     } else {
                         if (state.deals.isEmpty()) {
-                            Column(
+                            NoItemsContent(
                                 modifier = Modifier.fillMaxSize(),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                            ) {
-                                Icon(
-                                    modifier = Modifier.size(Resources.dimens.noDealsIconSize),
-                                    imageVector = Icons.Default.ShoppingCart,
-                                    contentDescription = null,
-                                )
-                                Spacer(modifier = Modifier.height(Resources.dimens.viewsSpacingSmall))
-                                Text(
-                                    text = Resources.strings.noGamesUnderFilter,
-                                    style = MaterialTheme.typography.titleMedium,
-                                    textAlign = TextAlign.Center,
-                                )
-                            }
+                                imageVector = Icons.Default.ShoppingCart,
+                                text = Resources.strings.noGamesUnderFilter,
+                            )
                         } else {
                             val dealModifier =
                                 Modifier.padding(bottom = Resources.dimens.viewsSpacingSmall)

@@ -67,7 +67,9 @@ class EnStringResources : StringResources {
         get() = "Reload"
 
     override val alerts: String
-        get() = "Your alerts"
+        get() = "Your Price Alerts"
+    override val noAlertsInfo: String
+        get() = "You haven't added any price alerts yet."
 
     override val errNetwork: String
         get() = "Network error occurred, check your internet connection."

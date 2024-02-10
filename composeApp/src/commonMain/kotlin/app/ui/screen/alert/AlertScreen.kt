@@ -2,11 +2,13 @@ package app.ui.screen.alert
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -16,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import app.ui.composable.NoItemsContent
 import app.ui.theme.Resources
 
 @Composable
@@ -39,18 +42,26 @@ fun AlertScreen(
             )
         }
     ) { insets ->
-        LazyColumn(
-            modifier = Modifier.padding(insets),
-            contentPadding = PaddingValues(
-                start = Resources.dimens.screenSpacingSmall,
-                end = Resources.dimens.screenSpacingSmall,
-                top = Resources.dimens.viewsSpacingSmall,
-                bottom = Resources.dimens.screenSpacingMedium,
-            ),
-            verticalArrangement = Arrangement.spacedBy(Resources.dimens.viewsSpacingSmall),
-        ) {
-            items(state.alerts) { alert ->
-                AlertCard(alert = alert, onDelete = { component.deleteAlert(alert) })
+        if (state.alerts.isEmpty()) {
+            NoItemsContent(
+                modifier = Modifier.padding(insets).fillMaxSize(),
+                imageVector = Icons.Default.Info,
+                text = Resources.strings.noAlertsInfo,
+            )
+        } else {
+            LazyColumn(
+                modifier = Modifier.padding(insets),
+                contentPadding = PaddingValues(
+                    start = Resources.dimens.screenSpacingSmall,
+                    end = Resources.dimens.screenSpacingSmall,
+                    top = Resources.dimens.viewsSpacingSmall,
+                    bottom = Resources.dimens.screenSpacingMedium,
+                ),
+                verticalArrangement = Arrangement.spacedBy(Resources.dimens.viewsSpacingSmall),
+            ) {
+                items(state.alerts) { alert ->
+                    AlertCard(alert = alert, onDelete = { component.deleteAlert(alert) })
+                }
             }
         }
     }
