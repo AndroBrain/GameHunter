@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.AlertDialog
@@ -50,19 +51,36 @@ fun ShopDialog(
             )
         },
         text = {
+            val height = Resources.dimens.shopItemHeight
+            val shape = MaterialTheme.shapes.small
+            val padding = Resources.dimens.viewsSpacingExtraSmall
             LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-                itemsIndexed(dialogShops) { index, shop ->
+                item(
+                    span = { GridItemSpan(maxCurrentLineSpan) }
+                ) {
+                    AllShopsCheck(
+                        height = height,
+                        shape = shape,
+                        padding = padding,
+                        shops = dialogShops,
+                        updateShops = { dialogShops = it }
+                    )
+                }
+                itemsIndexed(
+                    items = dialogShops,
+                    key = { index, item -> item.storeID },
+                ) { index, shop ->
                     Row(
                         modifier = Modifier
-                            .height(Resources.dimens.shopItemHeight)
-                            .clip(MaterialTheme.shapes.small)
+                            .height(height)
+                            .clip(shape)
                             .clickable {
                                 dialogShops = dialogShops.toMutableList().apply {
                                     val item = this[index]
                                     this[index] = item.copy(checked = !item.checked)
                                 }
                             }
-                            .padding(Resources.dimens.viewsSpacingExtraSmall),
+                            .padding(padding),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Checkbox(

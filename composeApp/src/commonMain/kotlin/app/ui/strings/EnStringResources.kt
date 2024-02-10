@@ -49,6 +49,8 @@ class EnStringResources : StringResources {
     override fun shops(count: Int) = "Shops: $count"
     override val shops: String
         get() = "Shops:"
+    override val allShops: String
+        get() = "All shops"
 
     override val noGamesUnderFilter: String
         get() = "There are no games under this filter"
