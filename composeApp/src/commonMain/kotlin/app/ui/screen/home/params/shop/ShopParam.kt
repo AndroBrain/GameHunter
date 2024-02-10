@@ -36,7 +36,12 @@ fun ShopParam(
         onClick = { shopVisible = true },
         label = {
             Row {
-                DealParamText(text = Resources.strings.shops(shops.count { it.checked }))
+                DealParamText(
+                    text = Resources.strings.shops(
+                        count = shops.count { it.checked },
+                        allShopsCount = shops.size,
+                    )
+                )
             }
         },
         colors = DealParamDefaults.colors(),

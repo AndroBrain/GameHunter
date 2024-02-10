@@ -46,7 +46,10 @@ fun ShopDialog(
         title = {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = Resources.strings.shops(dialogShops.count { it.checked }),
+                text = Resources.strings.shops(
+                    count = dialogShops.count { it.checked },
+                    allShopsCount = dialogShops.size,
+                ),
                 textAlign = TextAlign.Center,
             )
         },
