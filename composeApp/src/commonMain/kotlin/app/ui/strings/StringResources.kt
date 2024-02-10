@@ -23,7 +23,6 @@ interface StringResources {
     val maxPrice: String
     val onSaleOnly: String
     fun shops(count: Int): String
-    val shops: String
     val allShops: String
 
     val noGamesUnderFilter: String

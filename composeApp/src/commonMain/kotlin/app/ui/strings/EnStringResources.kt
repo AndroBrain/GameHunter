@@ -46,9 +46,7 @@ class EnStringResources : StringResources {
     override val onSaleOnly: String
         get() = "On sale only"
 
-    override fun shops(count: Int) = "Shops: $count"
-    override val shops: String
-        get() = "Shops:"
+    override fun shops(count: Int) = "Shops ($count)"
     override val allShops: String
         get() = "All shops"
 
