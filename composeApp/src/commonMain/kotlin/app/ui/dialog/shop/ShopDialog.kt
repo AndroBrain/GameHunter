@@ -103,6 +103,7 @@ fun ShopDialog(
                 Button(
                     modifier = Modifier.align(Alignment.Center).fillMaxWidth(0.7f),
                     onClick = { onConfirm(dialogShops) },
+                    enabled = dialogShops.any { it.checked },
                 ) {
                     Text(text = Resources.strings.confirm)
                 }
