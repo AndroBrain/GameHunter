@@ -2,6 +2,7 @@ package app.ui.screen.home
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,17 +32,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import app.ui.composable.NoItemsContent
@@ -54,8 +54,6 @@ import app.ui.theme.Resources
 import app.util.composable.modifier.ignoreHorizontalParentPadding
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 
-private const val ITEMS_TO_SHOW_MORE_DEALS = 5
-
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -63,45 +61,44 @@ fun HomeScreen(
 ) {
     val gridState = rememberLazyGridState()
     val state by component.state.collectAsState()
-    val showMore by remember {
-        derivedStateOf {
-            val visibleItemsInfo = gridState.layoutInfo.visibleItemsInfo
-            val lastVisibleItem = visibleItemsInfo.lastOrNull()
-            lastVisibleItem != null && lastVisibleItem.index + ITEMS_TO_SHOW_MORE_DEALS > gridState.layoutInfo.totalItemsCount
-        }
-    }
-    LaunchedEffect(showMore) {
-        if (showMore) {
-            component.getMoreDeals()
-        }
-    }
+    HomeScrollHandler(gridState = gridState, getDeals = component::getMoreDeals)
+    val focusManager = LocalFocusManager.current
     Scaffold(
         topBar = {
             Row(
                 modifier = Modifier.fillMaxWidth().padding(Resources.dimens.screenSpacingSmall),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                val keyboard = LocalSoftwareKeyboardController.current
+                val interactionSource = remember { MutableInteractionSource() }
+                val isFocused by interactionSource.collectIsFocusedAsState()
+                fun onSearch() {
+                    if (isFocused) {
+                        focusManager.clearFocus()
+                        component.getInitialDeals()
+                    } else {
+                        focusManager.clearFocus()
+                    }
+                }
                 OutlinedTextField(
                     modifier = Modifier.weight(1F),
                     value = state.query,
                     onValueChange = component::changeQuery,
                     trailingIcon = {
-                        Icon(imageVector = Icons.Default.Search, contentDescription = null)
+                        IconButton(onClick = ::onSearch) {
+                            Icon(imageVector = Icons.Default.Search, contentDescription = null)
+                        }
                     },
-                    shape = CircleShape,
+                    shape = if (isFocused) OutlinedTextFieldDefaults.shape else CircleShape,
                     keyboardActions = KeyboardActions(
-                        onSearch = {
-                            keyboard?.hide()
-                            component.getInitialDeals()
-                        },
+                        onSearch = { onSearch() },
                     ),
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Sentences,
                         imeAction = ImeAction.Search,
                     ),
                     singleLine = true,
-                    placeholder = { Text(text = Resources.strings.gameNamePlaceholder) }
+                    placeholder = { Text(text = Resources.strings.gameNamePlaceholder) },
+                    interactionSource = interactionSource,
                 )
                 Spacer(modifier = Modifier.width(Resources.dimens.viewsSpacingSmall))
                 val alertInteractionSource = remember { MutableInteractionSource() }
