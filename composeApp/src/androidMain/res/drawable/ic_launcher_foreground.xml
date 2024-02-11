@@ -14,18 +14,18 @@
                 android:pathData="M20,20m-19,0a19,19 0,1 1,38 0a19,19 0,1 1,-38 0"
                 android:strokeWidth="2"
                 android:fillColor="#00000000"
-                android:strokeColor="#ffffff" />
+                android:strokeColor="#FF5800" />
             <path
-                android:fillColor="#ffffff"
+                android:fillColor="#FF5800"
                 android:pathData="M19,5C19,5.552 19.448,6 20,6C20.552,6 21,5.552 21,5H19ZM19,1V5H21V1L19,1Z" />
             <path
-                android:fillColor="#ffffff"
+                android:fillColor="#FF5800"
                 android:pathData="M5.002,21C5.554,20.999 6.001,20.55 6,19.998C5.999,19.446 5.55,18.999 4.998,19L5.002,21ZM1.002,21.008L5.002,21L4.998,19L0.998,19.008L1.002,21.008Z" />
             <path
-                android:fillColor="#ffffff"
+                android:fillColor="#FF5800"
                 android:pathData="M21,35C21,34.448 20.552,34 20,34C19.448,34 19,34.448 19,35H21ZM21,39V35H19V39H21Z" />
             <path
-                android:fillColor="#ffffff"
+                android:fillColor="#FF5800"
                 android:pathData="M35.002,19C34.45,18.999 34.001,19.446 34,19.998C33.999,20.55 34.446,20.999 34.998,21L35.002,19ZM39.002,19.008L35.002,19L34.998,21L38.998,21.008L39.002,19.008Z" />
             <path
                 android:fillColor="#ffffff"
