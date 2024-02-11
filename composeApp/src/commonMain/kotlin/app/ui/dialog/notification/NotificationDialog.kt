@@ -58,6 +58,7 @@ fun NotificationDialog(
                             }
                         },
                         isError = !state.isEmailValid,
+                        maxLines = 1,
                     )
                     Spacer(modifier = Modifier.height(Resources.dimens.viewsSpacingSmall))
                     OutlinedTextField(
@@ -66,7 +67,8 @@ fun NotificationDialog(
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Decimal,
                         ),
-                        label = { Text(text = Resources.strings.notificationMaxPrice) }
+                        label = { Text(text = Resources.strings.notificationMaxPrice) },
+                        maxLines = 1,
                     )
                 }
             }
