@@ -167,7 +167,7 @@ fun HomeScreen(
                                 ),
                                 horizontalArrangement = Arrangement.spacedBy(Resources.dimens.viewsSpacingSmall)
                             ) {
-                                if (state.recentlyViewed.isNotEmpty()) {
+                                if (state.recentlyViewed.isNotEmpty() && state.showRecentlyViewed) {
                                     item(span = { GridItemSpan(maxLineSpan) }) {
                                         RecentlyViewedContent(
                                             modifier = Modifier.fillMaxWidth()

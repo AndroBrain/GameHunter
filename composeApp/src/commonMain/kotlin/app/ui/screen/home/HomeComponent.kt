@@ -141,6 +141,7 @@ class DefaultHomeComponent(
                             page = 1,
                             isFinalPage = false,
                             isInError = false,
+                            showRecentlyViewed = state.query.isBlank(),
                         )
                     }
                 },

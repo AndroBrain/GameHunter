@@ -11,6 +11,7 @@ data class HomeState(
     val isLoadingMore: Boolean = false,
     val page: Int = 0,
     val isFinalPage: Boolean = false,
+    val showRecentlyViewed: Boolean = true,
     val recentlyViewed: List<RecentlyViewedModel> = emptyList(),
     val shops: List<ShopDisplayable> = emptyList(),
     val query: String = "",
