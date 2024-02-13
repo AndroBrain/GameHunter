@@ -23,7 +23,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
-import app.ui.composable.image.AutoSizedAsyncImage
+import app.ui.composable.image.AutoSizedByHeightAsyncImage
 import app.ui.composable.modifier.scaleOnClick
 import app.ui.theme.Resources
 import domain.deal.DealModel
@@ -45,7 +45,7 @@ fun DealCard(
                 ),
         ) {
             Row {
-                AutoSizedAsyncImage(
+                AutoSizedByHeightAsyncImage(
                     url = deal.thumb,
                     targetWidth = Resources.dimens.dealImageWidth,
                     targetHeight = Resources.dimens.dealImageHeight,

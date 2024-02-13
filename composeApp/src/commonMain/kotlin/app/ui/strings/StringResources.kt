@@ -41,4 +41,5 @@ interface StringResources {
 
     val errNetwork: String
     val errUnknown: String
+    val errImage: String
 }

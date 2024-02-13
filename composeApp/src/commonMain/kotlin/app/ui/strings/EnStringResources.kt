@@ -75,4 +75,6 @@ class EnStringResources : StringResources {
         get() = "Network error occurred, check your internet connection."
     override val errUnknown: String
         get() = "Unknown error occurred."
+    override val errImage: String
+        get() = "Couldn't load image"
 }

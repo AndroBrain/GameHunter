@@ -24,6 +24,8 @@ data class Dimensions(
     val dealMinSize: Dp = 320.dp,
     val dealImageWidth: Dp = 84.dp,
     val dealImageHeight: Dp = 84.dp,
+//    val dealHorizontalSize: DpSize = DpSize(width =, height =)
+//    val dealVerticalSize: DpSize = DpSize(width =, height =)
 
     val shopItemHeight: Dp = 36.dp,
 

@@ -5,6 +5,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,7 +16,10 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
+import app.ui.theme.Resources
 import io.kamel.core.Resource
 import io.kamel.core.utils.cacheControl
 import io.kamel.image.KamelImage
@@ -47,13 +52,15 @@ fun AsyncImage(
 }
 
 @Composable
-fun AutoSizedAsyncImage(
+fun AutoSizedByHeightAsyncImage(
     modifier: Modifier = Modifier,
     url: String,
     targetWidth: Dp,
     targetHeight: Dp,
     contentDescription: String? = null,
+    aspectRatio: Float = 16f / 9,
     shape: Shape = RectangleShape,
+    contentScale: ContentScale = ContentScale.Crop,
 ) {
     val painterResource: Resource<Painter> = asyncPainterResource(url) {
         coroutineContext = Job() + Dispatchers.IO
@@ -77,28 +84,33 @@ fun AutoSizedAsyncImage(
                 val size = with(LocalDensity.current) {
                     painter.intrinsicSize.toDpSize()
                 }
-                val imageModifier = if (size.height > size.width) {
-                    val aspectRatio = size.height / size.width
-                    Modifier.size(
-                        width = targetWidth,
-                        height = targetWidth * aspectRatio,
-                    )
+                val imageSize = if (size.height > size.width) {
+                    DpSize(width = targetWidth, height = targetHeight)
                 } else {
-                    val aspectRatio = size.width / size.height
-                    Modifier.size(
+                    DpSize(
                         width = targetHeight * aspectRatio,
                         height = targetHeight,
                     )
                 }
                 Image(
-                    modifier = imageModifier.clip(shape),
+                    modifier = Modifier
+                        .size(imageSize)
+                        .clip(shape),
                     painter = painter,
                     contentDescription = contentDescription,
+                    contentScale = contentScale,
                 )
             }
 
             is Resource.Failure -> {
-                // TODO
+                Box(modifier = Modifier.size(width = targetWidth, height = targetHeight)) {
+                    Text(
+                        modifier = Modifier.align(Alignment.Center),
+                        text = Resources.strings.errImage,
+                        color = MaterialTheme.colorScheme.error,
+                        textAlign = TextAlign.Center,
+                    )
+                }
             }
         }
     }

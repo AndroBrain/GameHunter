@@ -19,7 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import app.ui.composable.image.AutoSizedAsyncImage
+import app.ui.composable.image.AutoSizedByHeightAsyncImage
 import app.ui.composable.modifier.scaleOnClick
 import app.ui.screen.home.rating.MetacriticRating
 import app.ui.screen.home.rating.SteamRating
@@ -43,7 +43,7 @@ fun RecentlyViewedCard(
                 ),
         ) {
             Row {
-                AutoSizedAsyncImage(
+                AutoSizedByHeightAsyncImage(
                     url = model.thumb,
                     targetWidth = Resources.dimens.dealImageWidth,
                     targetHeight = Resources.dimens.dealImageHeight,
