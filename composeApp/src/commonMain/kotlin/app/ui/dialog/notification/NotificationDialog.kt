@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -70,6 +71,10 @@ fun NotificationDialog(
                         label = { Text(text = Resources.strings.notificationMaxPrice) },
                         maxLines = 1,
                     )
+                    state.errorMessage?.let { message ->
+                        Spacer(modifier = Modifier.height(Resources.dimens.viewsSpacingSmall))
+                        Text(text = message.asString(), color = MaterialTheme.colorScheme.error)
+                    }
                 }
             }
         },

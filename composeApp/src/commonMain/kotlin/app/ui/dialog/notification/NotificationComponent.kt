@@ -54,12 +54,18 @@ class DefaultNotificationComponent(
             state.copy(
                 email = email,
                 isEmailValid = email.matches(Patterns.emailRegex),
+                errorMessage = null,
             )
         }
     }
 
     override fun changePrice(price: String) {
-        _state.update { state -> state.copy(price = DecimalFormatter.format(price).toDouble()) }
+        _state.update { state ->
+            state.copy(
+                price = DecimalFormatter.format(price).toDouble(),
+                errorMessage = null,
+            )
+        }
     }
 
     override fun setAlert() {
@@ -77,8 +83,9 @@ class DefaultNotificationComponent(
                 onOk = {
                     _state.update { state -> state.copy(isLoading = false, dismiss = true) }
                 }, onError = {
-                    _state.update { state -> state.copy(isLoading = false) }
-                    setMessage(Message.fromError(it.type))
+                    val message = Message.fromError(it.type)
+                    _state.update { state -> state.copy(isLoading = false, errorMessage = message) }
+                    setMessage(message)
                 }
             )
         }
